@@ -1,0 +1,26 @@
+{
+  "name": "sk222uf-project",
+  "version": "1.0.0",
+  "description": "Individual software project in the LNU course 1dv430.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1dv430/sk222uf-project.git"
+  },
+  "keywords": [
+    "software",
+    "project",
+    "bucketlist",
+    "lifelist",
+    "1dv430"
+  ],
+  "author": "ProfessorPotatis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1dv430/sk222uf-project/issues"
+  },
+  "homepage": "https://github.com/1dv430/sk222uf-project#readme"
+}
