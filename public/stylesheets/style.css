@@ -9,3 +9,20 @@
     width: 100%;
     height: auto;
 }
+
+/* FLASH SETTINGS */
+.greenFlash {
+    padding: 5px;
+    width: auto;
+    background-color: #ccffcc;
+    border: 1px solid green;
+}
+.redFlash {
+    padding: 5px;
+    width: auto;
+    background-color: #ffb2b2;
+    border: 1px solid red;
+}
+.redFlash ul {
+    list-style: none;
+}
