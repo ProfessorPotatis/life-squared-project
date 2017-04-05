@@ -58,7 +58,7 @@ router.route('/register').post(csrfProtection, function(req, res, next) {
         .then(function() {
             // Redirect to login and show a message.
             req.session.flash = {type: 'success', text: 'The user was saved successfully. Please login.'};
-            res.redirect('/');
+            res.redirect('/login');
         })
         .catch(function(err) {
             // If a validation error occurred, view the form and an error message.
@@ -140,6 +140,16 @@ router.route('/user').get(isAuthenticated, function(req, res) {
     sess = req.session;
 
     res.render('home/userPage', ({username: sess.username}));
+});
+
+/* If authenticated, destroy session and redirect to login page. */
+router.route('/logout').get(isAuthenticated, function(req, res) {
+    sess = req.session;
+    if (sess.username) {
+        // LOG OUT!
+        req.session.destroy();
+        res.redirect('/login');
+    }
 });
 
 // Export the module

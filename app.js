@@ -60,8 +60,7 @@
      resave: false
  }));
 
- // Flash messages - survives only a round trip.
- // Using Mats Loocks Pure Approval flash.
+ // Flash messages - only survives a round trip
  app.use(function(req, res, next) {
      res.locals.flash = req.session.flash;
      delete req.session.flash;
