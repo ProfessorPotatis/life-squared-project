@@ -14,6 +14,8 @@ let csrf = require('csurf');
 // Protection against CSRF attacks
 let csrfProtection = csrf();
 
+
+
 router.route('/').get(function(req, res) {
     res.render('home/index');
 });
@@ -64,6 +66,11 @@ router.route('/register').post(csrfProtection, function(req, res, next) {
             // Let the middleware handle any errors but ValidatorErrors.
             next(err);
         });
+});
+
+/* Show login page and include csrfToken. */
+router.route('/login').get(csrfProtection, function(req, res) {
+    res.render('home/login', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
 });
 
 // Export the module
