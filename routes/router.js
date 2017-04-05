@@ -14,6 +14,20 @@ let csrf = require('csurf');
 // Protection against CSRF attacks
 let csrfProtection = csrf();
 
+// Session variable
+let sess;
+
+// Middleware for authentication
+let isAuthenticated = function(req, res, next) {
+    let sess = req.session;
+
+    // If not authenticated trigger a 403 error.
+    if (!sess.username) {
+        return res.status(403).render('error/403');
+    }
+    next();
+};
+
 
 
 router.route('/').get(function(req, res) {
@@ -22,7 +36,13 @@ router.route('/').get(function(req, res) {
 
 /* Show register page and include csrfToken. */
 router.route('/register').get(csrfProtection, function(req, res) {
-    res.render('home/register', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
+    sess = req.session;
+    // If logged in redirect to user page, else show login page.
+    if (sess.username) {
+        res.redirect('/user');
+    } else {
+        res.render('home/register', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
+    }
 });
 
 /* If csrfToken is valid save new user to database. */
@@ -70,7 +90,56 @@ router.route('/register').post(csrfProtection, function(req, res, next) {
 
 /* Show login page and include csrfToken. */
 router.route('/login').get(csrfProtection, function(req, res) {
-    res.render('home/login', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
+    sess = req.session;
+    // If logged in redirect to user page, else show login page.
+    if (sess.username) {
+        res.redirect('/user');
+    } else {
+        res.render('home/login', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
+    }
+});
+
+/* If csrfToken is valid, user exist and password is correct: log in user. */
+router.route('/login').post(csrfProtection, function(req, res, next) {
+    sess = req.session;
+    // Look for user in database.
+    RegisterUser.findOne({username: req.body.username}).exec()
+        .then(function(data) {
+            let result = function(err, match) {
+                if (err) {
+                    next(err);
+                }
+
+                if (match) {
+                    sess.username = req.body.username;
+                    res.redirect('/user');
+                } else {
+                    return res.render('home/login', {
+                        validationErrors: ['Wrong password. Try again.'],
+                        username: req.body.username
+                    });
+                }
+            };
+
+            // Compare password to password in database.
+            data.comparePassword(req.body.password, result);
+        })
+        .catch(function(err) {
+            if (TypeError) {
+                return res.render('home/login', {
+                    validationErrors: ['That user does not exist. Please register.']
+                });
+            }
+            next(err);
+        });
+
+});
+
+/* If authenticated, show admin page. */
+router.route('/user').get(isAuthenticated, function(req, res) {
+    sess = req.session;
+
+    res.render('home/userPage', ({username: sess.username}));
 });
 
 // Export the module
