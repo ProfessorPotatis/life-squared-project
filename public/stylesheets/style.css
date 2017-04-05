@@ -4,10 +4,60 @@
     padding: 0;
 }
 
+/* BODY SETTINGS */
+body {
+    /*font-family: 'BeonRegular';*/
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'BeonRegular';
+}
+
 /* HEADER SETTINGS */
 .pageHeader a img {
     width: 100%;
     height: auto;
+}
+
+/* NAVIGATION SETTINGS */
+.navList {
+    font-family: 'BeonRegular';
+    margin-top: -6px;
+    list-style: none;
+    background-color: #339798;
+    padding: 10px;
+}
+.navList li {
+    display: inline;
+}
+.navList li a {
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #dcffff;
+}
+.navList li a:hover {
+    background-color: #2d7f7e;
+}
+
+/* CONTAINER SETTINGS */
+.container {
+    padding: 20px 20px;
+}
+
+/* FORM SETTINGS */
+form {
+    padding-top: 5px;
+}
+
+.form-button {
+    font-family: 'BeonRegular';
+    margin-top: 5px;
+    cursor: pointer;
+    height: 20px;
+    border-radius: 5px;
+    background-color: #339798;
+    color: #dcffff;
 }
 
 /* FLASH SETTINGS */
