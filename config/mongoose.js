@@ -9,7 +9,7 @@
 
 let mongoose = require('mongoose');
 
-const CONNECT_TO = 'mongodb://localhost/deadline';
+const CONNECT_TO = 'mongodb://localhost/lifeSquared';
 
 module.exports = function() {
     mongoose.connect(CONNECT_TO);
