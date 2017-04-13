@@ -10,6 +10,8 @@
 let mongoose = require('mongoose');
 let bcrypt = require('bcrypt-nodejs');
 
+mongoose.Promise = global.Promise;
+
 // Create a schema for registerUser
 let registerUserSchema = new mongoose.Schema({
     username: {
@@ -17,6 +19,7 @@ let registerUserSchema = new mongoose.Schema({
         required: [true, 'Username is required.'],
         unique: true,
         validate: {
+            isAsync: true,
             // Check if user already exist in database
           validator: function(value, callback) {
             RegisterUser.find({username: value}, function(err,docs){
@@ -30,6 +33,7 @@ let registerUserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Password is required.'],
         validate: {
+            isAsync: true,
             // Validate password to check for valid characters and minimum length
           validator: function(value) {
             return /^[a-z0-9!@#\$%\^\&*\)\(+=._-]{6,}$/i.test(value);
