@@ -13,12 +13,16 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'BeonRegular';
 }
 
-.right {
-    float: right;
+a {
+    text-decoration: none;
 }
 
 .center {
     text-align: center;
+}
+
+.right {
+    float: right;
 }
 
 /* HEADER SETTINGS */
@@ -40,7 +44,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 .navList li a {
     padding: 10px;
-    text-decoration: none;
     font-size: 18px;
     color: #dcffff;
 }
@@ -66,10 +69,10 @@ form {
     border-radius: 5px;
     background-color: #339798;
     color: #dcffff;
+    padding: 2px;
 }
 
 .form-button a {
-    text-decoration: none;
     color: #ffffff;
 }
 
@@ -90,7 +93,7 @@ form {
     list-style: none;
 }
 
-/* PROGRESS BAR */
+/* PROGRESS BAR SETTINGS */
 #myProgress {
     margin-top: 10px;
     width: 100%;
@@ -103,4 +106,22 @@ form {
     height: 30px;
     background-color: #339798;
     border-radius: 5px;
+}
+
+/* BUCKETLIST SETTINGS */
+.bucketlists {
+    float: left;
+    width: 48%;
+}
+.bucketlist {
+    background-color: lightgrey;
+    margin-bottom: 5px;
+}
+
+/* LIFELIST SETTINGS */
+.lifelist {
+    float: right;
+    background-color: lightgrey;
+    width: 48%;
+    margin-bottom: 5px;
 }

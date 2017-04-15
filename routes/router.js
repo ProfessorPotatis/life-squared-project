@@ -9,6 +9,8 @@
 
 const router = require('express').Router();
 let RegisterUser = require('../models/RegisterUser');
+let Bucketlist = require('../models/Bucketlist');
+let Lifelist = require('../models/Lifelist');
 let csrf = require('csurf');
 
 // Protection against CSRF attacks
@@ -136,10 +138,51 @@ router.route('/login').post(csrfProtection, function(req, res, next) {
 });
 
 /* If authenticated, show admin page. */
-router.route('/user').get(isAuthenticated, function(req, res) {
+router.route('/user').get(isAuthenticated, function(req, res, next) {
     sess = req.session;
+    let bucket, life;
 
-    res.render('home/userPage', ({username: sess.username}));
+    Bucketlist.find({}).exec()
+            .then (function(data) {
+                // Map the data
+                let context = {
+                    bucketlists: data.map(function(bucketlist) {
+                        return {
+                            title: bucketlist.title,
+                            createdAt: bucketlist.createdAt,
+                            id: bucketlist.id
+                        };
+                    })
+                };
+                bucket = context.bucketlists;
+            })
+            .then (function() {
+                Lifelist.find({}).exec()
+                        .then (function(data) {
+                            // Map the data
+                            let context = {
+                                lifelists: data.map(function(lifelist) {
+                                    return {
+                                        title: lifelist.title,
+                                        createdAt: lifelist.createdAt,
+                                        id: lifelist.id
+                                    };
+                                })
+                            };
+                            life = context.lifelists;
+                        })
+                        .then (function() {
+                            res.render('home/userPage', ({bucketlists: bucket, lifelist: life, username: sess.username}));
+                        })
+                        .catch (function(err) {
+                            res.render('home/userPage', {
+                                // Use the flash partial to view the error message.
+                                flash: {type: 'danger', text: err.message},
+                                bucketlists: []
+                            });
+                            next(err);
+                        });
+            });
 });
 
 /* If authenticated, destroy session and redirect to login page. */
@@ -150,6 +193,74 @@ router.route('/logout').get(isAuthenticated, function(req, res) {
         req.session.destroy();
         res.redirect('/login');
     }
+});
+
+/* If authenticated, show create page for bucketlist. Use csrfToken. */
+router.route('/createBucketlist').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/createBucketlist', ({title: undefined}, {csrfToken: req.csrfToken()}));
+});
+
+/* If authenticated and the csrfToken is valid, post bucketlist to userpage. */
+router.route('/createBucketlist').post(isAuthenticated, csrfProtection, function(req, res, next) {
+    // Create a new bucketlist.
+    let bucketlist = new Bucketlist({
+        title: req.body.title
+    });
+
+    // Save the bucketlist to the database.
+    bucketlist.save()
+        .then(function() {
+            // Redirect to userpage and show a message.
+            req.session.flash = {type: 'success', text: 'The bucketlist was saved successfully.'};
+            res.redirect('/user');
+        })
+        .catch(function(err) {
+            // If a validation error occurred, view the form and an error message.
+            if (err.errors.value.name === 'ValidatorError') {
+                // We handle the validation error!
+                return res.render('home/createBucketlist', {
+                    validationErrors: [err.errors.value.message],
+                    title: req.body.title
+                });
+            }
+
+            // Let the middleware handle any errors but ValidatorErrors.
+            next(err);
+        });
+});
+
+/* If authenticated, show create page for bucketlist. Use csrfToken. */
+router.route('/createLifelist').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/createLifelist', ({title: undefined}, {csrfToken: req.csrfToken()}));
+});
+
+/* If authenticated and the csrfToken is valid, post bucketlist to userpage. */
+router.route('/createLifelist').post(isAuthenticated, csrfProtection, function(req, res, next) {
+    // Create a new bucketlist.
+    let lifelist = new Lifelist({
+        title: req.body.title
+    });
+
+    // Save the lifelist to the database.
+    lifelist.save()
+        .then(function() {
+            // Redirect to userpage and show a message.
+            req.session.flash = {type: 'success', text: 'The lifelist was saved successfully.'};
+            res.redirect('/user');
+        })
+        .catch(function(err) {
+            // If a validation error occurred, view the form and an error message.
+            if (err.errors.value.name === 'ValidatorError') {
+                // We handle the validation error!
+                return res.render('home/createLifelist', {
+                    validationErrors: [err.errors.value.message],
+                    title: req.body.title
+                });
+            }
+
+            // Let the middleware handle any errors but ValidatorErrors.
+            next(err);
+        });
 });
 
 // Export the module

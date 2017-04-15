@@ -1,0 +1,7 @@
+<h2>Create bucketlist</h2>
+<form action="/createBucketlist" method="post">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    {{>validationSummary}}
+    <input type="text" name="title" placeholder="Name your bucketlist..." value="{{title}}" required="required"></input>
+    <button class="form-button" type="submit">Create</button>
+</form>
