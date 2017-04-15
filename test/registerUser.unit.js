@@ -5,27 +5,29 @@ let mongoose = require('../config/mongoose.js');
 
 
 describe('F1 – RegisterUser', function() {
-    // Useful when you want something to happen before each it-block.
-    // Ex. connect to database.
+    // Executes before all tests
     before(function(done) {
-        console.log('before!');
+        console.log('Before all tests:');
         // Connect to database
         mongoose();
+        done();
+    });
+
+    // Executes after all tests
+    after(function(done) {
+        console.log('After all tests:');
+        // Remove all registered users
         RegisterUser.remove({}, function(err) {
             if (err) {
                 console.log(err);
             }
             console.log('All registered users removed.');
+        })
+        .then(function() {
+            // Disconnect from database
+            process.emit('SIGINT');
+            done();
         });
-        done();
-    });
-
-    // Useful when you want something to happen after each it-block.
-    // Ex. disconnect from database.
-    after(function(done) {
-        console.log('after!');
-        process.emit('SIGINT');
-        done();
     });
 
     it('Test case 1: Register a new user with correct information', function(done) {
@@ -34,33 +36,29 @@ describe('F1 – RegisterUser', function() {
             password: 'Hej123'
         });
 
-        newUser.save();
-
-        RegisterUser.find({username: newUser.username}).exec()
-            .then(function(data) {
-                // Map the data
-                let context = {
-                    users: data.map(function(user) {
-                        return {
-                            username: user.username
+        newUser.save()
+            .then(function() {
+                RegisterUser.find({username: newUser.username}).exec()
+                    .then(function(data) {
+                        // Map the data
+                        let context = {
+                            users: data.map(function(user) {
+                                return {
+                                    username: user.username,
+                                    password: user.password
+                                };
+                            })
                         };
+                        return context.users;
                     })
-                };
-                return context.users;
-            })
-            .then(function(user) {
-                console.log(user[0].username);
-                expect(user[0].username).to.equal('newUser123');
-                done();
-            })
-            .catch(function(err) {
-                // If a validation error occurred with the username.
-                if (err.errors.username.name === 'ValidatorError') {
-                    // Compare ValidatorError to what we expect.
-                    console.log(err.errors.username.message);
-                    //expect(err.errors.username.message).to.equal('User already exists. Please choose another username.');
-                    done();
-                }
+                    .then(function(user) {
+                        expect(newUser).to.be.an.instanceof(RegisterUser);
+                        expect(newUser).to.have.property('username').that.is.a('string');
+                        expect(newUser).to.have.property('password').that.is.a('string');
+                        expect(user[0].username).to.equal('newUser123');
+                        expect(user[0].password).to.not.equal('Hej123');
+                        done();
+                    });
             });
     });
 
@@ -72,13 +70,9 @@ describe('F1 – RegisterUser', function() {
 
         newUser2.save()
             .catch(function(err) {
-                // If a validation error occurred with the username.
-                if (err.errors.username.name === 'ValidatorError') {
-                    // Compare ValidatorError to what we expect.
-                    console.log(err.errors.username.message);
-                    expect(err.errors.username.message).to.equal('User already exists. Please choose another username.');
-                    done();
-                }
+                expect(err.errors.username.name).to.equal('ValidatorError');
+                expect(err.errors.username.message).to.equal('User already exists. Please choose another username.');
+                done();
             });
     });
 
@@ -90,13 +84,9 @@ describe('F1 – RegisterUser', function() {
 
         newUser3.save()
             .catch(function(err) {
-                // If a validation error occurred with the password.
-                if (err.errors.password.name === 'ValidatorError') {
-                    // Compare ValidatorError to what we expect.
-                    console.log(err.errors.password.message);
-                    expect(err.errors.password.message).to.equal('Password must be at least 6 characters long.');
-                    done();
-                }
+                expect(err.errors.password.name).to.equal('ValidatorError');
+                expect(err.errors.password.message).to.equal('Password must be at least 6 characters long.');
+                done();
             });
     });
 });
