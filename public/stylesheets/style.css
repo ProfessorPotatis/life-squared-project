@@ -13,6 +13,14 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'BeonRegular';
 }
 
+.right {
+    float: right;
+}
+
+.center {
+    text-align: center;
+}
+
 /* HEADER SETTINGS */
 .pageHeader a img {
     width: 100%;
@@ -60,6 +68,11 @@ form {
     color: #dcffff;
 }
 
+.form-button a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
 /* FLASH SETTINGS */
 .greenFlash {
     padding: 5px;
@@ -75,4 +88,19 @@ form {
 }
 .redFlash ul {
     list-style: none;
+}
+
+/* PROGRESS BAR */
+#myProgress {
+    margin-top: 10px;
+    width: 100%;
+    background-color: lightgrey;
+    border-radius: 5px;
+}
+
+#myBar {
+    width: 10%;
+    height: 30px;
+    background-color: #339798;
+    border-radius: 5px;
 }
