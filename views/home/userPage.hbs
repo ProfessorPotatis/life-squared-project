@@ -11,7 +11,8 @@
     {{#each bucketlists}}
         <div class="bucketlist">
             <b>{{title}}</b><br>
-            {{createdAt}}
+            {{createdAt}}<br>
+            <div class="addGoal"><a href="/addGoal" class="form-button">+ Add goal</a></div>
         </div>
     {{/each}}
     </div>
@@ -20,7 +21,8 @@
     {{#each lifelist}}
         <div class="lifelist">
             <b>{{title}}</b><br>
-            {{createdAt}}
+            {{createdAt}}<br>
+            <div class="addGoal"><a href="/addGoal" class="form-button">+ Add goal</a></div>
         </div>
     {{/each}}
 {{/if}}

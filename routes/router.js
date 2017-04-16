@@ -263,5 +263,10 @@ router.route('/createLifelist').post(isAuthenticated, csrfProtection, function(r
         });
 });
 
+/* If authenticated, show create page for goal. Use csrfToken. */
+router.route('/addGoal').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/addGoal', ({goal: undefined, }, {csrfToken: req.csrfToken()}));
+});
+
 // Export the module
 module.exports = router;

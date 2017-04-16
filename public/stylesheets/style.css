@@ -125,3 +125,8 @@ form {
     width: 48%;
     margin-bottom: 5px;
 }
+
+.addGoal {
+    margin-left: 5px;
+    padding-bottom: 5px;
+}
