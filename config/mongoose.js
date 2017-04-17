@@ -32,15 +32,15 @@ let disconnect = function() {
     db.on('disconnected', function() {
         console.log('Disconnected from Mongoose.');
     });
-
-    // If the Node process ends, close the Mongoose connection.
-    process.on('SIGINT', function() {
-        db.close(function() {
-            console.log('Mongoose connection disconnected through app termination.');
-            process.exit(0);
-        });
-    });
 };
+
+// If the Node process ends, close the Mongoose connection.
+process.on('SIGINT', function() {
+    db.close(function() {
+        console.log('Mongoose connection disconnected through app termination.');
+        process.exit(0);
+    });
+});
 
 module.exports = {
     connect: connect,

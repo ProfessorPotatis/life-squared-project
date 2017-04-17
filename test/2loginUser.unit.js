@@ -50,8 +50,8 @@ describe('F2 – Login user', function() {
                                 console.log(err);
                             }
 
-                            expect(match).to.equal(true);
-                            expect(match).to.not.equal(false);
+                            expect(match).to.be.true;
+                            expect(match).to.not.be.false;
                             done();
                         };
 
@@ -60,32 +60,13 @@ describe('F2 – Login user', function() {
                     });
     });
 
-    /*it('Test case 2: Try to login with incorrect username', function(done) {
-        let newUser = new RegisterUser({
-            username: 'Testar',
-            password: 'Hej123'
-        });
-
-        newUser.save()
-            .then(function() {
-                RegisterUser.findOne({username: newUser.username}).exec()
-                    .then(function(data) {
-                        // Callback function
-                        let result = function(err, match) {
-                            if (err) {
-                                console.log(err);
-                            }
-
-                            expect(match).to.equal(true);
-                            expect(match).to.not.equal(false);
-                            done();
-                        };
-
-                        // Compare password to password in database.
-                        data.comparePassword('Hej123', result);
-                    });
+    it('Test case 2: Try to login with unregistered/incorrect username', function(done) {
+        RegisterUser.findOne({username: 'TestarFel'}).exec()
+            .then(function(data) {
+                expect(data).to.be.null;
+                done();
             });
-    });*/
+    });
 
     /*it('Test case 2: Try to register an already existing user', function(done) {
         let newUser2 = new RegisterUser({

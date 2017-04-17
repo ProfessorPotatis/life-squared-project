@@ -22,7 +22,7 @@
  let APP_SESSION = process.env.APP_SESSION;
 
  // Connect to database
- mongoose();
+ mongoose.connect();
 
  // View engine
  app.engine('.hbs', hbs({defaultLayout: 'main', extname: '.hbs'}));
