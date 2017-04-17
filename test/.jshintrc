@@ -1,0 +1,7 @@
+{
+    "predef": [
+      "describe",
+      "it"
+    ],
+    "esversion": 6
+}

@@ -1,7 +1,9 @@
+/*jshint expr: true*/
+
 let chai = require('chai');
-let expect = require('chai').expect;
+let expect = chai.expect;
 let RegisterUser = require('../models/RegisterUser');
-let mongoose = require('../config/mongoose.js');
+let mongoose = require('../config/mongoose');
 
 
 describe('F1 – Register user', function() {
@@ -17,16 +19,16 @@ describe('F1 – Register user', function() {
     after(function(done) {
         console.log('After all tests:');
         // Remove all registered users
-        RegisterUser.remove({}, function(err) {
+        RegisterUser.remove({username: 'newUser123'}, function(err) {
             if (err) {
                 console.log(err);
             }
-            console.log('All registered users removed.');
+            console.log('Registered user "newUser123" was removed.');
         })
         .then(function() {
             // Disconnect from database
             //process.emit('SIGINT');
-            mongoose.disconnect();
+            //mongoose.disconnect();
             done();
         });
     });

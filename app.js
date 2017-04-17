@@ -93,3 +93,5 @@
  app.listen(port, function () {
      console.log('Application listening on port ' + port + '.');
  });
+
+ module.exports = app;
