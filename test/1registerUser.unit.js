@@ -4,12 +4,12 @@ let RegisterUser = require('../models/RegisterUser');
 let mongoose = require('../config/mongoose.js');
 
 
-describe('F1 – RegisterUser', function() {
+describe('F1 – Register user', function() {
     // Executes before all tests
     before(function(done) {
         console.log('Before all tests:');
         // Connect to database
-        mongoose();
+        mongoose.connect();
         done();
     });
 
@@ -25,7 +25,8 @@ describe('F1 – RegisterUser', function() {
         })
         .then(function() {
             // Disconnect from database
-            process.emit('SIGINT');
+            //process.emit('SIGINT');
+            mongoose.disconnect();
             done();
         });
     });
