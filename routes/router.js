@@ -115,7 +115,7 @@ router.route('/user').get(isAuthenticated, function(req, res, next) {
     sess = req.session;
     let bucket, life;
 
-    Bucketlist.find({}).exec()
+    Bucketlist.find({user: sess.username}).exec()
             .then (function(data) {
                 // Map the data
                 let context = {
@@ -130,7 +130,7 @@ router.route('/user').get(isAuthenticated, function(req, res, next) {
                 bucket = context.bucketlists;
             })
             .then (function() {
-                Lifelist.find({}).exec()
+                Lifelist.find({user: sess.username}).exec()
                         .then (function(data) {
                             // Map the data
                             let context = {
@@ -177,7 +177,8 @@ router.route('/createBucketlist').get(isAuthenticated, csrfProtection, function(
 router.route('/createBucketlist').post(isAuthenticated, csrfProtection, function(req, res, next) {
     // Create a new bucketlist.
     let bucketlist = new Bucketlist({
-        title: req.body.title
+        title: req.body.title,
+        user: sess.username
     });
 
     // Save the bucketlist to the database.
@@ -211,7 +212,8 @@ router.route('/createLifelist').get(isAuthenticated, csrfProtection, function(re
 router.route('/createLifelist').post(isAuthenticated, csrfProtection, function(req, res, next) {
     // Create a new bucketlist.
     let lifelist = new Lifelist({
-        title: req.body.title
+        title: req.body.title,
+        user: sess.username
     });
 
     // Save the lifelist to the database.

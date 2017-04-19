@@ -119,6 +119,7 @@ form {
     padding: 5px;
     width: auto;
     background-color: #ccffcc;
+    color: black;
     border: 1px solid green;
 }
 .redFlash {
@@ -126,6 +127,7 @@ form {
     padding: 5px;
     width: auto;
     background-color: #ffb2b2;
+    color: black;
     border: 1px solid red;
 }
 .redFlash ul {

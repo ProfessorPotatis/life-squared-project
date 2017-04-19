@@ -20,6 +20,10 @@ let bucketlistSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    user: {
+        type: String,
+        required: true
     }
 });
 
