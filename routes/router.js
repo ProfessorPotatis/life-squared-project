@@ -32,8 +32,14 @@ let isAuthenticated = function(req, res, next) {
 
 
 
-router.route('/').get(function(req, res) {
-    res.render('home/index');
+router.route('/').get(csrfProtection, function(req, res) {
+    sess = req.session;
+    // If logged in redirect to user page, else show login page.
+    if (sess.username) {
+        res.redirect('/user');
+    } else {
+        res.render('home/index', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
+    }
 });
 
 /* Show register page and include csrfToken. */
@@ -60,7 +66,7 @@ router.route('/register').post(csrfProtection, function(req, res, next) {
         .then(function() {
             // Redirect to login and show a message.
             req.session.flash = {type: 'success', text: 'The user was saved successfully. Please login.'};
-            res.redirect('/login');
+            res.redirect('/');
         })
         .catch(function(err) {
             // If a validation error occurred, view the form and an error message.
@@ -90,17 +96,6 @@ router.route('/register').post(csrfProtection, function(req, res, next) {
         });
 });
 
-/* Show login page and include csrfToken. */
-router.route('/login').get(csrfProtection, function(req, res) {
-    sess = req.session;
-    // If logged in redirect to user page, else show login page.
-    if (sess.username) {
-        res.redirect('/user');
-    } else {
-        res.render('home/login', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
-    }
-});
-
 /* If csrfToken is valid, user exist and password is correct: log in user. */
 router.route('/login').post(csrfProtection, function(req, res, next) {
     sess = req.session;
@@ -116,7 +111,7 @@ router.route('/login').post(csrfProtection, function(req, res, next) {
                     sess.username = req.body.username;
                     res.redirect('/user');
                 } else {
-                    return res.render('home/login', {
+                    return res.render('home/index', {
                         validationErrors: ['Wrong password. Try again.'],
                         username: req.body.username
                     });
@@ -128,7 +123,7 @@ router.route('/login').post(csrfProtection, function(req, res, next) {
         })
         .catch(function(err) {
             if (TypeError) {
-                return res.render('home/login', {
+                return res.render('home/index', {
                     validationErrors: ['That user does not exist. Please register.']
                 });
             }
@@ -191,7 +186,7 @@ router.route('/logout').get(isAuthenticated, function(req, res) {
     if (sess.username) {
         // LOG OUT!
         req.session.destroy();
-        res.redirect('/login');
+        res.redirect('/');
     }
 });
 
