@@ -1,5 +1,5 @@
-<h2>Create lifelist</h2>
-<form action="/createLifelist" method="post">
+<h2>Create lifelist for {{username}}</h2>
+<form action="/createLifelist/?username={{username}}" method="post">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     {{>validationSummary}}
     <input type="text" name="title" placeholder="Name your lifelist..." value="{{title}}" required="required"></input>

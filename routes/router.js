@@ -23,6 +23,7 @@ let sess;
 // Middleware for authentication
 let isAuthenticated = function(req, res, next) {
     let sess = req.session;
+    console.log(sess);
 
     // If not authenticated trigger a 403 error.
     if (!sess.username) {
@@ -34,6 +35,15 @@ let isAuthenticated = function(req, res, next) {
 
 
 router.route('/').get(csrfProtection, function(req, res) {
+    /*RegisterUser.remove({}, function(err) {
+        console.log('All registered users removed.');
+    });
+    Bucketlist.remove({}, function(err) {
+        console.log('All bucketlists removed.');
+    });
+    Lifelist.remove({}, function(err) {
+        console.log('All lifelists removed.');
+    });*/
     sess = req.session;
     // If logged in redirect to user page, else show login page.
     if (sess.username) {
@@ -170,7 +180,7 @@ router.route('/logout').get(isAuthenticated, function(req, res) {
 
 /* If authenticated, show create page for bucketlist. Use csrfToken. */
 router.route('/createBucketlist').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/createBucketlist', ({title: undefined}, {csrfToken: req.csrfToken()}));
+    res.render('home/createBucketlist', ({title: undefined, username: req.query.username, csrfToken: req.csrfToken()}));
 });
 
 /* If authenticated and the csrfToken is valid, post bucketlist to userpage. */
@@ -178,7 +188,7 @@ router.route('/createBucketlist').post(isAuthenticated, csrfProtection, function
     // Create a new bucketlist.
     let bucketlist = new Bucketlist({
         title: req.body.title,
-        user: sess.username
+        user: req.query.username
     });
 
     // Save the bucketlist to the database.
@@ -205,7 +215,7 @@ router.route('/createBucketlist').post(isAuthenticated, csrfProtection, function
 
 /* If authenticated, show create page for bucketlist. Use csrfToken. */
 router.route('/createLifelist').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/createLifelist', ({title: undefined}, {csrfToken: req.csrfToken()}));
+    res.render('home/createLifelist', ({title: undefined, username: req.query.username, csrfToken: req.csrfToken()}));
 });
 
 /* If authenticated and the csrfToken is valid, post bucketlist to userpage. */
@@ -213,7 +223,7 @@ router.route('/createLifelist').post(isAuthenticated, csrfProtection, function(r
     // Create a new bucketlist.
     let lifelist = new Lifelist({
         title: req.body.title,
-        user: sess.username
+        user: req.query.username
     });
 
     // Save the lifelist to the database.
