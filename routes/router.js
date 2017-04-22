@@ -127,13 +127,15 @@ router.route('/user').get(isAuthenticated, function(req, res, next) {
 
     Bucketlist.find({user: sess.username}).exec()
             .then (function(data) {
+                console.log(data);
                 // Map the data
                 let context = {
                     bucketlists: data.map(function(bucketlist) {
                         return {
                             title: bucketlist.title,
                             createdAt: bucketlist.createdAt,
-                            id: bucketlist.id
+                            id: bucketlist.id,
+                            goals: bucketlist.goals
                         };
                     })
                 };
@@ -179,16 +181,16 @@ router.route('/logout').get(isAuthenticated, function(req, res) {
 });
 
 /* If authenticated, show create page for bucketlist. Use csrfToken. */
-router.route('/createBucketlist').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/createBucketlist', ({title: undefined, username: req.query.username, csrfToken: req.csrfToken()}));
+router.route('/createBucketlist/:username').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/createBucketlist', ({title: undefined, username: req.params.username, csrfToken: req.csrfToken()}));
 });
 
 /* If authenticated and the csrfToken is valid, post bucketlist to userpage. */
-router.route('/createBucketlist').post(isAuthenticated, csrfProtection, function(req, res, next) {
+router.route('/createBucketlist/:username').post(isAuthenticated, csrfProtection, function(req, res, next) {
     // Create a new bucketlist.
     let bucketlist = new Bucketlist({
         title: req.body.title,
-        user: req.query.username
+        user: req.params.username
     });
 
     // Save the bucketlist to the database.
@@ -213,17 +215,17 @@ router.route('/createBucketlist').post(isAuthenticated, csrfProtection, function
         });
 });
 
-/* If authenticated, show create page for bucketlist. Use csrfToken. */
-router.route('/createLifelist').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/createLifelist', ({title: undefined, username: req.query.username, csrfToken: req.csrfToken()}));
+/* If authenticated, show create page for lifelist. Use csrfToken. */
+router.route('/createLifelist/:username').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/createLifelist', ({title: undefined, username: req.params.username, csrfToken: req.csrfToken()}));
 });
 
-/* If authenticated and the csrfToken is valid, post bucketlist to userpage. */
-router.route('/createLifelist').post(isAuthenticated, csrfProtection, function(req, res, next) {
+/* If authenticated and the csrfToken is valid, post lifelist to userpage. */
+router.route('/createLifelist/:username').post(isAuthenticated, csrfProtection, function(req, res, next) {
     // Create a new bucketlist.
     let lifelist = new Lifelist({
         title: req.body.title,
-        user: req.query.username
+        user: req.params.username
     });
 
     // Save the lifelist to the database.
@@ -249,9 +251,38 @@ router.route('/createLifelist').post(isAuthenticated, csrfProtection, function(r
 });
 
 /* If authenticated, show create page for goal. Use csrfToken. */
-router.route('/addGoal').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/addGoal', ({goal: undefined}, {csrfToken: req.csrfToken()}));
+router.route('/addGoal/:id').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/addGoal', ({goal: undefined, id: req.params.id, csrfToken: req.csrfToken()}));
 });
+
+/* If authenticated and the csrfToken is valid, post goal to specified list. */
+router.route('/addGoal/:id').post(isAuthenticated, csrfProtection, function(req, res, next) {
+    Bucketlist.findOneAndUpdate(
+        {_id: req.params.id},
+        {$push: {'goals': {title: req.body.goal}}},
+        {safe: true, upsert: true, new: true},
+        function(err, model) {
+            next(err);
+            console.log(model);
+            // Redirect to userpage and show a message.
+            req.session.flash = {type: 'success', text: 'The goal was saved successfully.'};
+            res.redirect('/user');
+        }
+    ).catch(function(err) {
+        // If a validation error occurred, view the form and an error message.
+        if (err.errors.value.name === 'ValidatorError') {
+            // We handle the validation error!
+            return res.render('home/addGoal', {
+                validationErrors: [err.errors.value.message],
+                title: req.body.title
+            });
+        }
+
+        // Let the middleware handle any errors but ValidatorErrors.
+        next(err);
+    });
+});
+
 
 // Export the module
 module.exports = router;

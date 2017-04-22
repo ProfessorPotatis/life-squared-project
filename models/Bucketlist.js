@@ -24,7 +24,10 @@ let bucketlistSchema = new mongoose.Schema({
     user: {
         type: String,
         required: true
-    }
+    },
+    goals: {
+        title: {type: [String], index: true}
+        }
 });
 
 // Create a model using the schema.
