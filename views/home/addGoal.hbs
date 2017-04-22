@@ -1,5 +1,5 @@
 <h2>Add goal</h2>
-<form action="/addGoal/{{id}}" method="post">
+<form action="/addGoal/{{id}}/{{list}}" method="post">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     {{>validationSummary}}
     <input type="text" name="goal" placeholder="Write your goal..." value="{{goal}}" required="required"></input>

@@ -24,7 +24,10 @@ let lifelistSchema = new mongoose.Schema({
     user: {
         type: String,
         required: true
-    }
+    },
+    goals: [{
+        title: {type: String}
+    }]
 });
 
 // Create a model using the schema.

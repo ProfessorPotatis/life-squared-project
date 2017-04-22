@@ -25,9 +25,9 @@ let bucketlistSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    goals: {
-        title: {type: [String], index: true}
-        }
+    goals: [{
+        title: {type: String}
+    }]
 });
 
 // Create a model using the schema.

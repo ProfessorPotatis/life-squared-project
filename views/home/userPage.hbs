@@ -15,7 +15,7 @@
             {{#if goals}}
                 {{goals}}<br>
             {{/if}}
-            <div class="addGoal"><a href="/addGoal/{{id}}" class="form-button">+ Add goal</a></div>
+            <div class="addGoal"><a href="/addGoal/{{id}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
         </div>
     {{/each}}
     </div>
@@ -25,7 +25,10 @@
         <div class="lifelist">
             <b>{{title}}</b><br>
             {{createdAt}}<br>
-            <div class="addGoal"><a href="/addGoal/{{id}}" class="form-button">+ Add goal</a></div>
+            {{#if goals}}
+                {{goals}}<br>
+            {{/if}}
+            <div class="addGoal"><a href="/addGoal/{{id}}?list=Lifelist" class="form-button">+ Add goal</a></div>
         </div>
     {{/each}}
 {{/if}}

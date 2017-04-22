@@ -127,7 +127,6 @@ router.route('/user').get(isAuthenticated, function(req, res, next) {
 
     Bucketlist.find({user: sess.username}).exec()
             .then (function(data) {
-                console.log(data);
                 // Map the data
                 let context = {
                     bucketlists: data.map(function(bucketlist) {
@@ -150,7 +149,8 @@ router.route('/user').get(isAuthenticated, function(req, res, next) {
                                     return {
                                         title: lifelist.title,
                                         createdAt: lifelist.createdAt,
-                                        id: lifelist.id
+                                        id: lifelist.id,
+                                        goals: lifelist.goals
                                     };
                                 })
                             };
@@ -252,35 +252,41 @@ router.route('/createLifelist/:username').post(isAuthenticated, csrfProtection, 
 
 /* If authenticated, show create page for goal. Use csrfToken. */
 router.route('/addGoal/:id').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/addGoal', ({goal: undefined, id: req.params.id, csrfToken: req.csrfToken()}));
+    res.render('home/addGoal', ({goal: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
 });
 
 /* If authenticated and the csrfToken is valid, post goal to specified list. */
-router.route('/addGoal/:id').post(isAuthenticated, csrfProtection, function(req, res, next) {
-    Bucketlist.findOneAndUpdate(
-        {_id: req.params.id},
-        {$push: {'goals': {title: req.body.goal}}},
-        {safe: true, upsert: true, new: true},
-        function(err, model) {
-            next(err);
-            console.log(model);
-            // Redirect to userpage and show a message.
-            req.session.flash = {type: 'success', text: 'The goal was saved successfully.'};
-            res.redirect('/user');
-        }
-    ).catch(function(err) {
-        // If a validation error occurred, view the form and an error message.
-        if (err.errors.value.name === 'ValidatorError') {
-            // We handle the validation error!
-            return res.render('home/addGoal', {
-                validationErrors: [err.errors.value.message],
-                title: req.body.title
-            });
-        }
+router.route('/addGoal/:id/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
+    let list = req.params.list;
+    console.log(list);
 
-        // Let the middleware handle any errors but ValidatorErrors.
-        next(err);
-    });
+    if (list === 'Bucketlist') {
+        Bucketlist.findOneAndUpdate(
+            {_id: req.params.id},
+            {$push: {'goals': {title: req.body.goal}}},
+            {safe: true, upsert: true, new: true},
+            function(err, model) {
+                console.log(err);
+
+                // Redirect to userpage and show a message.
+                req.session.flash = {type: 'success', text: 'The goal was saved successfully.'};
+                res.redirect('/user');
+            }
+        );
+    } else if (list === 'Lifelist') {
+        Lifelist.findOneAndUpdate(
+            {_id: req.params.id},
+            {$push: {'goals': {title: req.body.goal}}},
+            {safe: true, upsert: true, new: true},
+            function(err, model) {
+                console.log(err);
+
+                // Redirect to userpage and show a message.
+                req.session.flash = {type: 'success', text: 'The goal was saved successfully.'};
+                res.redirect('/user');
+            }
+        );
+    }
 });
 
 
