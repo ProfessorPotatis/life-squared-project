@@ -1,3 +1,4 @@
+{{>navbarAuthenticated}}
 <h2>Create lifelist for {{username}}</h2>
 <form action="/createLifelist/{{username}}" method="post">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">

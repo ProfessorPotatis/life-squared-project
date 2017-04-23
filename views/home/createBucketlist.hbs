@@ -1,3 +1,4 @@
+{{>navbarAuthenticated}}
 <h2>Create bucketlist for {{username}}</h2>
 <form action="/createBucketlist/{{username}}" method="post">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
