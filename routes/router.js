@@ -217,12 +217,25 @@ router.route('/createBucketlist/:username').post(isAuthenticated, csrfProtection
 
 /* If authenticated, show create page for lifelist. Use csrfToken. */
 router.route('/createLifelist/:username').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/createLifelist', ({title: undefined, username: req.params.username, csrfToken: req.csrfToken()}));
+    Lifelist.findOne({user: req.params.username}).exec()
+        .then(function(data) {
+            if (data) {
+                // Render userpage and show a message.
+                res.render('home/userPage', {
+                    validationErrors: ['You may only have one lifelist.'],
+                    username: req.params.username,
+                    bucketlists: [],
+                    lifelist: []
+                });
+            } else {
+                res.render('home/createLifelist', ({title: undefined, username: req.params.username, csrfToken: req.csrfToken()}));
+            }
+        });
 });
 
 /* If authenticated and the csrfToken is valid, post lifelist to userpage. */
 router.route('/createLifelist/:username').post(isAuthenticated, csrfProtection, function(req, res, next) {
-    // Create a new bucketlist.
+    // Create a new lifelist.
     let lifelist = new Lifelist({
         title: req.body.title,
         user: req.params.username
