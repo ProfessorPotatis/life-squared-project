@@ -1,3 +1,12 @@
+/**
+ * Module for error handling.
+ *
+ * @author ProfessorPotatis
+ * @version 1.0.0
+ */
+
+ 'use strict';
+
 function errorHandling(err, next, req, res, path) {
     // If a validation error occurred, view the form and an error message.
     if (err.errors.username !== undefined && err.errors.username.name === 'ValidatorError') {

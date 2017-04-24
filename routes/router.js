@@ -12,6 +12,7 @@ let RegisterUser = require('../models/RegisterUser');
 let Bucketlist = require('../models/Bucketlist');
 let Lifelist = require('../models/Lifelist');
 let Errors = require('./errorhandling');
+let emptyDatabase = require('./emptyDatabase');
 let csrf = require('csurf');
 
 // Protection against CSRF attacks
@@ -23,7 +24,6 @@ let sess;
 // Middleware for authentication
 let isAuthenticated = function(req, res, next) {
     let sess = req.session;
-    console.log(sess);
 
     // If not authenticated trigger a 403 error.
     if (!sess.username) {
@@ -34,22 +34,17 @@ let isAuthenticated = function(req, res, next) {
 
 
 
-router.route('/').get(csrfProtection, function(req, res) {
-    /*RegisterUser.remove({}, function(err) {
-        console.log('All registered users removed.');
-    });
-    Bucketlist.remove({}, function(err) {
-        console.log('All bucketlists removed.');
-    });
-    Lifelist.remove({}, function(err) {
-        console.log('All lifelists removed.');
-    });*/
+router.route('/').get(/*csrfProtection,*/ function(req, res) {
+    /*emptyDatabase.removeUser();
+    emptyDatabase.removeBucketlist();
+    emptyDatabase.removeLifelist();*/
+
     sess = req.session;
     // If logged in redirect to user page, else show login page.
     if (sess.username) {
         res.redirect('/user');
     } else {
-        res.render('home/index', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
+        res.render('home/index', ({username: undefined, password: undefined}/*, {csrfToken: req.csrfToken()}*/));
     }
 });
 
@@ -85,7 +80,7 @@ router.route('/register').post(csrfProtection, function(req, res, next) {
 });
 
 /* If csrfToken is valid, user exist and password is correct: log in user. */
-router.route('/login').post(csrfProtection, function(req, res, next) {
+router.route('/login').post(/*csrfProtection,*/ function(req, res, next) {
     sess = req.session;
     // Look for user in database.
     RegisterUser.findOne({username: req.body.username}).exec()

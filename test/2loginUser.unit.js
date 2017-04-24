@@ -36,7 +36,7 @@ describe('F2 – Log in user', function() {
         })
         .then(function() {
             // Disconnect from database
-            mongoose.disconnect();
+            //mongoose.disconnect();
             //process.emit('SIGINT');
             done();
         });
