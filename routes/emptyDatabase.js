@@ -13,18 +13,27 @@
 
  function removeUser() {
      RegisterUser.remove({}, function(err) {
+         if (err) {
+             console.log(err);
+         }
          console.log('All registered users removed.');
      });
  }
 
  function removeBucketlist() {
      Bucketlist.remove({}, function(err) {
+         if (err) {
+             console.log(err);
+         }
          console.log('All bucketlists removed.');
      });
  }
 
  function removeLifelist() {
      Lifelist.remove({}, function(err) {
+         if (err) {
+             console.log(err);
+         }
          console.log('All lifelists removed.');
      });
  }
