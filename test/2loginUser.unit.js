@@ -43,27 +43,27 @@ describe('F2 – Log in user', function() {
     });
 
     it('Test case 1: Log in a user with correct information', function(done) {
-                RegisterUser.findOne({username: 'Testar'}).exec()
-                    .then(function(data) {
-                        expect(data).to.exist;
-                        expect(data).to.be.instanceof(RegisterUser);
-                        expect(data).to.have.property('username');
-                        expect(data).to.have.property('password');
+        RegisterUser.findOne({username: 'Testar'}).exec()
+            .then(function(data) {
+                expect(data).to.exist;
+                expect(data).to.be.instanceof(RegisterUser);
+                expect(data).to.have.property('username');
+                expect(data).to.have.property('password');
 
-                        // Callback function
-                        let result = function(err, match) {
-                            if (err) {
-                                console.log(err);
-                            }
+                // Callback function
+                let result = function(err, match) {
+                    if (err) {
+                        console.log(err);
+                    }
 
-                            expect(match).to.be.true;
-                            expect(match).to.not.be.false;
-                            done();
-                        };
+                    expect(match).to.be.true;
+                    expect(match).to.not.be.false;
+                    done();
+                };
 
-                        // Compare password to password in database.
-                        data.comparePassword('Hej123', result);
-                    });
+                // Compare password to password in database.
+                data.comparePassword('Hej123', result);
+            });
     });
 
     it('Test case 2: Try to log in with unregistered/incorrect username', function(done) {

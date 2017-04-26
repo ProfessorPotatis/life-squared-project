@@ -25,7 +25,7 @@
                      res.redirect('/user');
                  } else {
                      return res.render('home/index', {
-                         validationErrors: ['Wrong password. Try again.'],
+                         validationErrors: ['Wrong password or username. Try again.'],
                          username: req.body.username
                      });
                  }
