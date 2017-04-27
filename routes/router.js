@@ -35,7 +35,7 @@ let isAuthenticated = function(req, res, next) {
 };
 
 
-router.route('/').get(csrfProtection, function(req, res) {
+router.route('/').get(/*csrfProtection,*/ function(req, res) {
     /*emptyDatabase.removeUser();
     emptyDatabase.removeBucketlist();
     emptyDatabase.removeLifelist();*/
@@ -45,7 +45,7 @@ router.route('/').get(csrfProtection, function(req, res) {
     if (sess.username) {
         res.redirect('/user');
     } else {
-        res.render('home/index', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
+        res.render('home/index', ({username: undefined, password: undefined}/*, {csrfToken: req.csrfToken()}*/));
     }
 });
 
@@ -66,7 +66,7 @@ router.route('/register').post(csrfProtection, function(req, res, next) {
 });
 
 /* If csrfToken is valid, user exist and password is correct: log in user. */
-router.route('/login').post(csrfProtection, function(req, res, next) {
+router.route('/login').post(/*csrfProtection,*/ function(req, res, next) {
     login.loginUser(req, res, sess, next);
 });
 

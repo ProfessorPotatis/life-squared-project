@@ -35,9 +35,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "cheerio": "^0.22.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "superagent": "^3.5.2",
+    "superagent-csrf-middleware": "^0.3.0",
     "supertest": "^3.0.0"
   }
 }
