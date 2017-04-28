@@ -30,6 +30,7 @@ let disconnect = function() {
     db.close();
 
     db.on('disconnected', function() {
+        db.close();
         console.log('Disconnected from Mongoose.');
     });
 };

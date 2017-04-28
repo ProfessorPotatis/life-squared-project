@@ -12,12 +12,21 @@
     <div class="bucketlists">
     {{#each bucketlists}}
         <div class="bucketlist">
-            <b>{{title}}</b><br>
-            {{createdAt}}<br>
+            <h4>{{title}}</h4><br>
+            <b>Created at: </b>{{createdAt}}<br>
+            <b>Goals:</b><br>
             {{#if goals}}
-                {{goals}}<br>
+                {{#goals}}
+                    {{title}}<br>
+                {{/goals}}
+            {{else}}
+                <i>No goals added yet.</i><br>
+            {{/if}}
+            {{#if deadline}}
+                <br><b>Deadline: </b>{{deadline}}<br>
             {{/if}}
             <div class="addGoal"><a href="/addGoal/{{id}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
+            <div class="addGoal"><a href="/setDeadline/{{id}}?list=Bucketlist" class="form-button">+ Set deadline</a></div>
         </div>
     {{/each}}
     </div>
@@ -25,12 +34,21 @@
 {{#if lifelist }}
     {{#each lifelist}}
         <div class="lifelist">
-            <b>{{title}}</b><br>
-            {{createdAt}}<br>
+            <h4>{{title}}</h4><br>
+            <b>Created at: </b>{{createdAt}}<br>
+            <b>Goals:</b><br>
             {{#if goals}}
-                {{goals}}<br>
+                {{#goals}}
+                    {{title}}<br>
+                {{/goals}}
+            {{else}}
+                <i>No goals added yet.</i><br>
+            {{/if}}
+            {{#if deadline}}
+                <br><b>Deadline: </b>{{deadline}}<br>
             {{/if}}
             <div class="addGoal"><a href="/addGoal/{{id}}?list=Lifelist" class="form-button">+ Add goal</a></div>
+            <div class="addGoal"><a href="/setDeadline/{{id}}?list=Lifelist" class="form-button">+ Set deadline</a></div>
         </div>
     {{/each}}
 {{/if}}

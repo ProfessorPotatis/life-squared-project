@@ -18,6 +18,14 @@ function createLoginCookie(server, loginDetails, done) {
 }
 
 describe('F3 - Log out user', function () {
+    // Executes before all tests
+    before(function(done) {
+        console.log('Before all tests:');
+        // Connect to database
+        //mongoose.connect();
+        done();
+    });
+
     // Executes after all tests
     after(function(done) {
         console.log('After all tests:');

@@ -1,0 +1,8 @@
+{{>navbarAuthenticated}}
+<h2>Set deadline</h2>
+<form action="/setDeadline/{{id}}/{{list}}" method="post">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    {{>validationSummary}}
+    <input type="text" name="deadline" placeholder="yyyy-mm-dd" value="{{deadline}}" required="required"></input>
+    <button class="form-button" type="submit">Add</button>
+</form>

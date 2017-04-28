@@ -14,6 +14,7 @@ let login = require('./loginUser');
 let fetchList = require('./fetchLists');
 let createList = require('./createList');
 let addGoal = require('./addGoal');
+let setDeadline = require('./setDeadline');
 //let emptyDatabase = require('./emptyDatabase');
 let csrf = require('csurf');
 
@@ -144,6 +145,16 @@ router.route('/addGoal/:id').get(isAuthenticated, csrfProtection, function(req, 
 /* If authenticated and the csrfToken is valid, post goal to specified list. */
 router.route('/addGoal/:id/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
     addGoal.addGoal(req, res, next);
+});
+
+/* If authenticated, show create page for deadline. Use csrfToken. */
+router.route('/setDeadline/:id').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
+});
+
+/* If authenticated and the csrfToken is valid, post deadline to specified list. */
+router.route('/setDeadline/:id/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
+    setDeadline.setDeadline(req, res, next);
 });
 
 

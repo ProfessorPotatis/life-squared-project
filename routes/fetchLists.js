@@ -26,7 +26,8 @@
                                  title: bucketlist.title,
                                  createdAt: bucketlist.createdAt,
                                  id: bucketlist.id,
-                                 goals: bucketlist.goals
+                                 goals: bucketlist.goals,
+                                 deadline: bucketlist.deadline
                              };
                          })
                      };
@@ -43,7 +44,7 @@
                      if (!data) {
                          reject();
                      }
-                     
+
                      // Map the data
                      let context = {
                          lifelists: data.map(function(lifelist) {
@@ -51,7 +52,8 @@
                                  title: lifelist.title,
                                  createdAt: lifelist.createdAt,
                                  id: lifelist.id,
-                                 goals: lifelist.goals
+                                 goals: lifelist.goals,
+                                 deadline: lifelist.deadline
                              };
                          })
                      };
