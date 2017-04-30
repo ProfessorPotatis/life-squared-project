@@ -3,6 +3,6 @@
 <form action="/setDeadline/{{id}}/{{list}}" method="post">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     {{>validationSummary}}
-    <input type="text" name="deadline" placeholder="yyyy-mm-dd" value="{{deadline}}" required="required"></input>
+    <input type="text" pattern="20[1-9][0-9]-((0[1-9])|(1[0-2]))-(([1-2][0-9])|(3[0-1])|(0[1-9]))" name="deadline" placeholder="yyyy-mm-dd" value="{{deadline}}" required="required"></input>
     <button class="form-button" type="submit">Add</button>
 </form>
