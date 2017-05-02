@@ -24,6 +24,8 @@ let csrfProtection = csrf();
 // Session variable
 let sess;
 
+let bucket, life;
+
 // Middleware for authentication
 let isAuthenticated = function(req, res, next) {
     let sess = req.session;
@@ -74,7 +76,6 @@ router.route('/login').post(/*csrfProtection,*/ function(req, res, next) {
 /* If authenticated, show admin page and fetch users lists. */
 router.route('/user').get(isAuthenticated, function(req, res/*, next*/) {
     sess = req.session;
-    let bucket, life;
 
     Promise.all([fetchList.bucketlist(req, res, sess)]).then(function(theBucketlists) {
         return Promise.resolve(theBucketlists);
@@ -123,8 +124,8 @@ router.route('/createLifelist/:username').get(isAuthenticated, csrfProtection, f
                 res.render('home/userPage', {
                     validationErrors: ['You may only have one lifelist.'],
                     username: req.params.username,
-                    bucketlists: [],
-                    lifelist: []
+                    bucketlists: bucket[0],
+                    lifelist: life
                 });
             } else {
                 res.render('home/createLifelist', ({title: undefined, username: req.params.username, csrfToken: req.csrfToken()}));
