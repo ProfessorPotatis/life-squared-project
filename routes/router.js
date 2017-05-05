@@ -9,6 +9,7 @@
 
 const router = require('express').Router();
 let Lifelist = require('../models/Lifelist');
+let Bucketlist = require('../models/Bucketlist');
 let register = require('./registerUser');
 let login = require('./loginUser');
 let fetchList = require('./fetchLists');
@@ -150,7 +151,37 @@ router.route('/addGoal/:id/:list').post(isAuthenticated, csrfProtection, functio
 
 /* If authenticated, show create page for deadline. Use csrfToken. */
 router.route('/setDeadline/:id').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
+    if (req.query.list === 'Bucketlist') {
+        Bucketlist.findOne({_id: req.params.id}).exec()
+            .then(function(data) {
+                if (data.deadline) {
+                    // Render userpage and show a message.
+                    res.render('home/userPage', {
+                        validationErrors: ['You have already set a deadline.'],
+                        username: data.user,
+                        bucketlists: bucket[0],
+                        lifelist: life
+                    });
+                } else {
+                    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
+                }
+            });
+    } else if (req.query.list === 'Lifelist') {
+        Lifelist.findOne({_id: req.params.id}).exec()
+            .then(function(data) {
+                if (data.deadline) {
+                    // Render userpage and show a message.
+                    res.render('home/userPage', {
+                        validationErrors: ['You have already set a deadline.'],
+                        username: data.user,
+                        bucketlists: bucket[0],
+                        lifelist: life
+                    });
+                } else {
+                    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
+                }
+            });
+    }
 });
 
 /* If authenticated and the csrfToken is valid, post deadline to specified list. */
