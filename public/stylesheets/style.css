@@ -184,3 +184,48 @@ form {
 .checkbox {
     margin-right: 5px;
 }
+
+
+
+
+/**
+* Chat styling
+*/
+.chat {
+    height: 300px;
+    width: 250px;
+    padding: 5px 5px;
+    font-family: monospace;
+}
+
+.chat input {
+    z-index: 1;
+}
+
+.message {
+    font-weight: bold;
+    color: black;
+}
+
+.messages {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    width: 240px;
+    left: 5px;
+    right: 10px;
+    top: 50px;
+    bottom: 70px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.chat .messageArea {
+    position: absolute;
+    top: 280px;
+    width: 238px;
+    margin: 5px 0;
+    padding: 5px;
+    height: 40px;
+}

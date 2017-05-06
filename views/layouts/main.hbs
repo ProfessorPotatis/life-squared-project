@@ -12,6 +12,44 @@
        // Connect to socket.io.
        let socket = io();
 
+       let chatDiv = document.getElementsByClassName('chat')[0];
+
+       chatDiv.addEventListener('keypress', function(event) {
+           // Listen for Enter key
+           if (event.keyCode === 13) {
+               // Send a message and empty the textarea
+               sendMessage(event.target.value);
+               event.target.value = '';
+               event.preventDefault();
+           }
+       });
+
+       function sendMessage(message) {
+           socket.emit('chat message', message);
+       }
+
+       socket.on('print message', function(theMsg) {
+           let template = document.querySelectorAll('template')[0];
+           let messageDiv = document.importNode(template.content.firstElementChild, true);
+
+           messageDiv.querySelectorAll('.text')[0].textContent = theMsg;
+
+           let messages = document.getElementsByClassName('messages')[0];
+           messages.appendChild(messageDiv);
+       });
+
+       /*let sendButton = document.getElementsByClassName('sendMessage');
+       console.log(sendButton[0].value);
+       let message = document.getElementById('m');
+
+       sendButton[0].addEventListener('click', sendMessage);*/
+
+       /*function sendMessage(e) {
+           socket.emit('chat message', {message: message.value});
+           message.value = '';
+           return;
+       }*/
+
        let checkboxes = document.getElementsByClassName('checkbox');
        let percentPerBox = 100 / checkboxes.length;
 

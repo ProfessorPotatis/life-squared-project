@@ -57,31 +57,23 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
             // Receive data from the client
             socket.on('checked', function(data) {
                console.log(data.message);
-               /*Bucketlist.findOneAndUpdate({goals: {title: data.message}}, {goals: {checked: true}}, function(err, doc) {
-                   console.log(err);
-                   console.log(doc);
-               });*/
                Bucketlist.find({}).exec()
                    .then(function(data) {
-                      console.log(data);
-                      console.log(data[0]);
-                      console.log(data[0].goals);
+                      //console.log(data);
+                      //console.log(data[0]);
+                      //console.log(data[0].goals);
                       for (let i = 0; i < data[0].goals.length; i += 1) {
-                          console.log(data[0].goals[i].title);
+                          //console.log(data[0].goals[i].title);
                           if (data[0].goals[i].title === data.message) {
                               console.log('hej');
                               data[0].goals[i].checked = true;
                           }
                       }
-
                   });
-                 /* Bucketlist.find({title: 'Första bucketlist'}).exec()
-                      .then(function(data) {
-                         console.log(data);
-                         console.log(data[0].title);
-                         console.log(data[0].goals[0].title);
-                         console.log(data[0].goals[0].checked);
-                     });*/
+            });
+
+            socket.on('chat message', function(msg) {
+                io.emit('print message', msg);
             });
 
             // The connection was closed
@@ -234,6 +226,10 @@ router.route('/setDeadline/:id').get(isAuthenticated, csrfProtection, function(r
 /* If authenticated and the csrfToken is valid, post deadline to specified list. */
 router.route('/setDeadline/:id/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
     setDeadline.setDeadline(req, res, next);
+});
+
+router.route('/chat').get(isAuthenticated, function(req, res) {
+    res.render('home/chat');
 });
 
 
