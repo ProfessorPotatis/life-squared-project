@@ -27,7 +27,8 @@
                                  createdAt: bucketlist.createdAt,
                                  id: bucketlist.id,
                                  goals: bucketlist.goals,
-                                 deadline: bucketlist.deadline
+                                 deadline: bucketlist.deadline,
+                                 checked: bucketlist.checked
                              };
                          })
                      };
@@ -53,7 +54,8 @@
                                  createdAt: lifelist.createdAt,
                                  id: lifelist.id,
                                  goals: lifelist.goals,
-                                 deadline: lifelist.deadline
+                                 deadline: lifelist.deadline,
+                                 checked: lifelist.checked
                              };
                          })
                      };

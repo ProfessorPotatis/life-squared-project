@@ -31,7 +31,8 @@
     "express-secure-handlebars": "^2.1.0",
     "express-session": "^1.15.1",
     "helmet": "^3.4.1",
-    "mongoose": "^4.8.4"
+    "mongoose": "^4.8.4",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",

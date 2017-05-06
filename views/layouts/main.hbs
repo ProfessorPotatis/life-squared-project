@@ -7,6 +7,37 @@
         {{>flash}}
         {{{body}}}
     </div>
-    <script src="/js/check.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+       // Connect to socket.io.
+       let socket = io();
+
+       let checkboxes = document.getElementsByClassName('checkbox');
+       let percentPerBox = 100 / checkboxes.length;
+
+       showProgress();
+
+       for (let i = 0; i < checkboxes.length; i += 1) {
+           checkboxes[i].addEventListener('click', showProgress);
+       }
+
+       function showProgress(e) {
+           let progressBar = document.getElementById('myBar');
+           let count = 0;
+
+           for (let x = 0; x < checkboxes.length; x += 1) {
+               if (checkboxes[x].checked) {
+                   count += 1;
+                   console.log(checkboxes[x]);
+                   // When checkbox is checked, send message to server.
+                   socket.emit('checked', {message: checkboxes[x].value});
+               }
+           }
+
+           let percent = percentPerBox * count;
+           progressBar.style.width = percent + '%';
+
+       }
+    </script>
 </body>
 </html>

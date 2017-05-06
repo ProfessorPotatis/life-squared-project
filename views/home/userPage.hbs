@@ -17,7 +17,11 @@
             <b>Goals:</b><br>
             {{#if goals}}
                 {{#goals}}
-                    <input type="checkbox" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
+                    {{#if checked}}
+                        <input type="checkbox" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}} {{checked}}<br>
+                    {{else}}
+                        <input type="checkbox" name="aGoal" value="{{title}}" class="checkbox">{{title}} {{checked}}<br>
+                    {{/if}}
                 {{/goals}}
             {{else}}
                 <i>No goals added yet.</i><br>
