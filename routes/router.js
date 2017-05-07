@@ -27,6 +27,11 @@ let sess;
 
 let bucket, life;
 
+let events = require('events');
+class MyEmitter extends events {}
+const myEmitter = new MyEmitter();
+myEmitter.setMaxListeners(0);
+
 // Global variable
 let connected = false;
 
@@ -73,7 +78,16 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
             });
 
             socket.on('chat message', function(msg) {
-                io.emit('print message', msg);
+                io.emit('print message', {msg: msg.message, user: msg.user});
+            });
+
+            myEmitter.on('new user', function(data) {
+                // Send data to client
+                socket.emit('new user', data.message);
+            });
+
+            socket.on('system message', function(data) {
+                socket.emit('print message', {msg: data.message, user: data.user});
             });
 
             // The connection was closed
@@ -228,7 +242,8 @@ router.route('/setDeadline/:id/:list').post(isAuthenticated, csrfProtection, fun
     setDeadline.setDeadline(req, res, next);
 });
 
-router.route('/chat').get(isAuthenticated, function(req, res) {
+router.route('/chat/:username').get(isAuthenticated, function(req, res) {
+    myEmitter.emit('new user', {message: req.params.username});
     res.render('home/chat');
 });
 

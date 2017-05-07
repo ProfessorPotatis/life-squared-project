@@ -12,69 +12,70 @@
        // Connect to socket.io.
        let socket = io();
 
-       let chatDiv = document.getElementsByClassName('chat')[0];
+       let url = window.location.pathname;
+       let urlArray = url.split('/');
+       let path = urlArray[urlArray.length - 1];
+       let path2 = urlArray[urlArray.length - 2];
 
-       chatDiv.addEventListener('keypress', function(event) {
-           // Listen for Enter key
-           if (event.keyCode === 13) {
-               // Send a message and empty the textarea
-               sendMessage(event.target.value);
-               event.target.value = '';
-               event.preventDefault();
+       if (path === 'user') {
+           let checkboxes = document.getElementsByClassName('checkbox');
+           let percentPerBox = 100 / checkboxes.length;
+
+           showProgress();
+
+           for (let i = 0; i < checkboxes.length; i += 1) {
+               checkboxes[i].addEventListener('click', showProgress);
            }
-       });
 
-       function sendMessage(message) {
-           socket.emit('chat message', message);
-       }
+           function showProgress(e) {
+               let progressBar = document.getElementById('myBar');
+               let count = 0;
 
-       socket.on('print message', function(theMsg) {
-           let template = document.querySelectorAll('template')[0];
-           let messageDiv = document.importNode(template.content.firstElementChild, true);
-
-           messageDiv.querySelectorAll('.text')[0].textContent = theMsg;
-
-           let messages = document.getElementsByClassName('messages')[0];
-           messages.appendChild(messageDiv);
-       });
-
-       /*let sendButton = document.getElementsByClassName('sendMessage');
-       console.log(sendButton[0].value);
-       let message = document.getElementById('m');
-
-       sendButton[0].addEventListener('click', sendMessage);*/
-
-       /*function sendMessage(e) {
-           socket.emit('chat message', {message: message.value});
-           message.value = '';
-           return;
-       }*/
-
-       let checkboxes = document.getElementsByClassName('checkbox');
-       let percentPerBox = 100 / checkboxes.length;
-
-       showProgress();
-
-       for (let i = 0; i < checkboxes.length; i += 1) {
-           checkboxes[i].addEventListener('click', showProgress);
-       }
-
-       function showProgress(e) {
-           let progressBar = document.getElementById('myBar');
-           let count = 0;
-
-           for (let x = 0; x < checkboxes.length; x += 1) {
-               if (checkboxes[x].checked) {
-                   count += 1;
-                   console.log(checkboxes[x]);
-                   // When checkbox is checked, send message to server.
-                   socket.emit('checked', {message: checkboxes[x].value});
+               for (let x = 0; x < checkboxes.length; x += 1) {
+                   if (checkboxes[x].checked) {
+                       count += 1;
+                       console.log(checkboxes[x]);
+                       // When checkbox is checked, send message to server.
+                       socket.emit('checked', {message: checkboxes[x].value});
+                   }
                }
+
+               let percent = percentPerBox * count;
+               progressBar.style.width = percent + '%';
+           }
+       } else if (path2 === 'chat') {
+           let chatDiv = document.getElementsByClassName('chat')[0];
+           let user = urlArray[urlArray.length - 1];
+
+           chatDiv.addEventListener('keypress', function(event) {
+               // Listen for Enter key
+               if (event.keyCode === 13) {
+                   // Send a message and empty the textarea
+                   sendMessage(event.target.value, user);
+                   event.target.value = '';
+                   event.preventDefault();
+               }
+           });
+
+           function sendMessage(message, user) {
+               socket.emit('chat message', {message: message, user: user});
            }
 
-           let percent = percentPerBox * count;
-           progressBar.style.width = percent + '%';
+           socket.on('new user', function(user) {
+               let message = 'System message: A user connected to chat.';
+               socket.emit('system message', {message: message, user: user});
+           });
 
+           socket.on('print message', function(theMsg) {
+               let template = document.querySelectorAll('template')[0];
+               let messageDiv = document.importNode(template.content.firstElementChild, true);
+
+               messageDiv.querySelectorAll('.author')[0].textContent = theMsg.user;
+               messageDiv.querySelectorAll('.text')[0].textContent = theMsg.msg;
+
+               let messages = document.getElementsByClassName('messages')[0];
+               messages.appendChild(messageDiv);
+           });
        }
     </script>
 </body>
