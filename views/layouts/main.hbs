@@ -27,7 +27,7 @@
                checkboxes[i].addEventListener('click', showProgress);
            }
 
-           function showProgress(e) {
+           function showProgress() {
                let progressBar = document.getElementById('myBar');
                let count = 0;
 
@@ -35,8 +35,12 @@
                    if (checkboxes[x].checked) {
                        count += 1;
                        console.log(checkboxes[x]);
+                       console.log(checkboxes[x].id);
                        // When checkbox is checked, send message to server.
-                       socket.emit('checked', {message: checkboxes[x].value});
+                       socket.emit('checked', {message: checkboxes[x].value, id: checkboxes[x].id});
+                   } else if (!checkboxes[x].checked) {
+                       // When checkbox is unchecked, send message to server.
+                       socket.emit('unchecked', {message: checkboxes[x].value, id: checkboxes[x].id});
                    }
                }
 

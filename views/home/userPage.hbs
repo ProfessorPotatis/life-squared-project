@@ -10,19 +10,19 @@
 
 {{#if bucketlists }}
     <div class="bucketlists">
-    {{#each bucketlists}}
+    {{#each bucketlists as |value key|}}
         <div class="bucketlist">
             <h4>{{title}}</h4><br>
             <b>Created at: </b>{{createdAt}}<br>
             <b>Goals:</b><br>
             {{#if goals}}
-                {{#goals}}
+                {{#each goals}}
                     {{#if checked}}
-                        <input type="checkbox" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}} {{checked}}<br>
+                        <input type="checkbox" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}} (checked boolean: {{checked}})<br>
                     {{else}}
-                        <input type="checkbox" name="aGoal" value="{{title}}" class="checkbox">{{title}} {{checked}}<br>
+                        <input type="checkbox" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}} (checked boolean: {{checked}})<br>
                     {{/if}}
-                {{/goals}}
+                {{/each}}
             {{else}}
                 <i>No goals added yet.</i><br>
             {{/if}}

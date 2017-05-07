@@ -60,21 +60,33 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
             console.log('Connected to socket.');
 
             // Receive data from the client
-            socket.on('checked', function(data) {
-               console.log(data.message);
-               Bucketlist.find({}).exec()
+            socket.on('checked', function(box) {
+                console.log(box.id);
+               Bucketlist.findById(box.id).exec()
                    .then(function(data) {
-                      //console.log(data);
-                      //console.log(data[0]);
-                      //console.log(data[0].goals);
-                      for (let i = 0; i < data[0].goals.length; i += 1) {
-                          //console.log(data[0].goals[i].title);
-                          if (data[0].goals[i].title === data.message) {
-                              console.log('hej');
-                              data[0].goals[i].checked = true;
-                          }
-                      }
-                  });
+                       for (let i = 0; i < data.goals.length; i += 1) {
+                           if (data.goals[i].title === box.message) {
+                               if (data.goals[i].checked === false) {
+                                   data.goals[i].checked = true;
+                               }
+                           }
+                           data.save();
+                       }
+                   });
+            });
+
+            socket.on('unchecked', function(box) {
+               Bucketlist.findById(box.id).exec()
+                   .then(function(data) {
+                       for (let i = 0; i < data.goals.length; i += 1) {
+                           if (data.goals[i].title === box.message) {
+                               if (data.goals[i].checked === true) {
+                                   data.goals[i].checked = false;
+                               }
+                           }
+                           data.save();
+                       }
+                   });
             });
 
             socket.on('chat message', function(msg) {
