@@ -61,32 +61,61 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
 
             // Receive data from the client
             socket.on('checked', function(box) {
-                console.log(box.id);
-               Bucketlist.findById(box.id).exec()
-                   .then(function(data) {
-                       for (let i = 0; i < data.goals.length; i += 1) {
-                           if (data.goals[i].title === box.message) {
-                               if (data.goals[i].checked === false) {
-                                   data.goals[i].checked = true;
+                if (box.list === 'bucketlist') {
+                    Bucketlist.findById(box.id).exec()
+                       .then(function(data) {
+                           for (let i = 0; i < data.goals.length; i += 1) {
+                               if (data.goals[i].title === box.message) {
+                                   if (data.goals[i].checked === false) {
+                                       data.goals[i].checked = true;
+                                   }
                                }
+                               data.save();
                            }
-                           data.save();
-                       }
-                   });
+                       });
+                } else if (box.list === 'lifelist') {
+                    Lifelist.findById(box.id).exec()
+                       .then(function(data) {
+                           for (let i = 0; i < data.goals.length; i += 1) {
+                               if (data.goals[i].title === box.message) {
+                                   if (data.goals[i].checked === false) {
+                                       data.goals[i].checked = true;
+                                   }
+                               }
+                               data.save();
+                           }
+                       });
+                }
+
             });
 
             socket.on('unchecked', function(box) {
-               Bucketlist.findById(box.id).exec()
-                   .then(function(data) {
-                       for (let i = 0; i < data.goals.length; i += 1) {
-                           if (data.goals[i].title === box.message) {
-                               if (data.goals[i].checked === true) {
-                                   data.goals[i].checked = false;
-                               }
-                           }
-                           data.save();
-                       }
-                   });
+                if (box.list === 'bucketlist') {
+                    Bucketlist.findById(box.id).exec()
+                        .then(function(data) {
+                            for (let i = 0; i < data.goals.length; i += 1) {
+                                if (data.goals[i].title === box.message) {
+                                    if (data.goals[i].checked === true) {
+                                        data.goals[i].checked = false;
+                                    }
+                                }
+                                data.save();
+                            }
+                        });
+                } else if (box.list === 'lifelist') {
+                    Lifelist.findById(box.id).exec()
+                        .then(function(data) {
+                            for (let i = 0; i < data.goals.length; i += 1) {
+                                if (data.goals[i].title === box.message) {
+                                    if (data.goals[i].checked === true) {
+                                        data.goals[i].checked = false;
+                                    }
+                                }
+                                data.save();
+                            }
+                        });
+                }
+
             });
 
             socket.on('chat message', function(msg) {

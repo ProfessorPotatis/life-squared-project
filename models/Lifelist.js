@@ -26,7 +26,8 @@ let lifelistSchema = new mongoose.Schema({
         required: true
     },
     goals: [{
-        title: {type: String}
+        title: {type: String},
+        checked: {type: Boolean, default: false}
     }],
     deadline: {
         type: Date

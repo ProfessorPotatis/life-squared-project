@@ -18,9 +18,9 @@
             {{#if goals}}
                 {{#each goals}}
                     {{#if checked}}
-                        <input type="checkbox" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}} (checked boolean: {{checked}})<br>
+                        <input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
                     {{else}}
-                        <input type="checkbox" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}} (checked boolean: {{checked}})<br>
+                        <input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
                     {{/if}}
                 {{/each}}
             {{else}}
@@ -37,15 +37,19 @@
     </div>
 {{/if}}
 {{#if lifelist }}
-    {{#each lifelist}}
+    {{#each lifelist as |value key|}}
         <div class="lifelist">
             <h4>{{title}}</h4><br>
             <b>Created at: </b>{{createdAt}}<br>
             <b>Goals:</b><br>
             {{#if goals}}
-                {{#goals}}
-                    <input type="checkbox" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
-                {{/goals}}
+                {{#each goals}}
+                    {{#if checked}}
+                        <input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
+                    {{else}}
+                        <input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
+                    {{/if}}
+                {{/each}}
             {{else}}
                 <i>No goals added yet.</i><br>
             {{/if}}

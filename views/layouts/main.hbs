@@ -34,13 +34,11 @@
                for (let x = 0; x < checkboxes.length; x += 1) {
                    if (checkboxes[x].checked) {
                        count += 1;
-                       console.log(checkboxes[x]);
-                       console.log(checkboxes[x].id);
                        // When checkbox is checked, send message to server.
-                       socket.emit('checked', {message: checkboxes[x].value, id: checkboxes[x].id});
+                       socket.emit('checked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
                    } else if (!checkboxes[x].checked) {
                        // When checkbox is unchecked, send message to server.
-                       socket.emit('unchecked', {message: checkboxes[x].value, id: checkboxes[x].id});
+                       socket.emit('unchecked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
                    }
                }
 
