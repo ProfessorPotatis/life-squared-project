@@ -1,8 +1,19 @@
 {{>navbarAuthenticated}}
 <h2>Create bucketlist for {{username}}</h2>
-<form action="/createBucketlist/{{username}}" method="post">
+<form action="/createBucketlist/{{username}}" method="post" id="myForm">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     {{>validationSummary}}
     <input type="text" name="title" placeholder="Name your bucketlist..." value="{{title}}" required="required"></input>
     <button class="form-button" type="submit">Create</button>
 </form>
+
+<script>
+    let form = document.getElementById('myForm');
+     form.noValidate = true;
+     form.addEventListener('submit', function(event) {
+        if (!event.target.checkValidity()) {
+             event.preventDefault();
+             alert('Error! You must fill all required fields.');
+    }
+    }, false);
+</script>
