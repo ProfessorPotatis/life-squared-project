@@ -9,6 +9,8 @@
 
 <script>
     let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    let browserVersion = /10_3/.test(navigator.userAgent) && !window.MSStream;
+    alert(browserVersion);
     alert(navigator.userAgent);
 
     if (iOS) {
