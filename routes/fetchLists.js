@@ -22,8 +22,6 @@
                      // Map the data
                      let context = {
                          bucketlists: data.map(function(bucketlist) {
-                             console.log(bucketlist.deadline);
-                             console.log(typeof bucketlist.deadline);
                              return {
                                  title: bucketlist.title,
                                  createdAt: bucketlist.createdAt,

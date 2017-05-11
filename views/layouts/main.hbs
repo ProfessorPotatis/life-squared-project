@@ -9,76 +9,79 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-       // Connect to socket.io.
-       let socket = io();
+        function ready() {
+            // Connect to socket.io.
+            let socket = io();
 
-       let url = window.location.pathname;
-       let urlArray = url.split('/');
-       let path = urlArray[urlArray.length - 1];
-       let path2 = urlArray[urlArray.length - 2];
+            let url = window.location.pathname;
+            let urlArray = url.split('/');
+            let path = urlArray[urlArray.length - 1];
+            let path2 = urlArray[urlArray.length - 2];
 
-       if (path === 'user') {
-           let checkboxes = document.getElementsByClassName('checkbox');
-           let percentPerBox = 100 / checkboxes.length;
+            if (path === 'user') {
+                let checkboxes = document.getElementsByClassName('checkbox');
+                let percentPerBox = 100 / checkboxes.length;
 
-           showProgress();
+                showProgress();
 
-           for (let i = 0; i < checkboxes.length; i += 1) {
-               checkboxes[i].addEventListener('click', showProgress);
-           }
+                for (let i = 0; i < checkboxes.length; i += 1) {
+                    checkboxes[i].addEventListener('click', showProgress);
+                }
 
-           function showProgress() {
-               let progressBar = document.getElementById('myBar');
-               let count = 0;
+                function showProgress() {
+                    let progressBar = document.getElementById('myBar');
+                    let count = 0;
 
-               for (let x = 0; x < checkboxes.length; x += 1) {
-                   if (checkboxes[x].checked) {
-                       count += 1;
-                       // When checkbox is checked, send message to server.
-                       socket.emit('checked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
-                   } else if (!checkboxes[x].checked) {
-                       // When checkbox is unchecked, send message to server.
-                       socket.emit('unchecked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
-                   }
-               }
+                    for (let x = 0; x < checkboxes.length; x += 1) {
+                        if (checkboxes[x].checked) {
+                            count += 1;
+                            // When checkbox is checked, send message to server.
+                            socket.emit('checked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
+                        } else if (!checkboxes[x].checked) {
+                            // When checkbox is unchecked, send message to server.
+                            socket.emit('unchecked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
+                        }
+                    }
 
-               let percent = percentPerBox * count;
-               progressBar.style.width = percent + '%';
-           }
-       } else if (path2 === 'chat') {
-           let chatDiv = document.getElementsByClassName('chat')[0];
-           let user = urlArray[urlArray.length - 1];
+                    let percent = percentPerBox * count;
+                    progressBar.style.width = percent + '%';
+                }
+            } else if (path2 === 'chat') {
+                let chatDiv = document.getElementsByClassName('chat')[0];
+                let user = urlArray[urlArray.length - 1];
 
-           chatDiv.addEventListener('keypress', function(event) {
-               // Listen for Enter key
-               if (event.keyCode === 13) {
-                   // Send a message and empty the textarea
-                   sendMessage(event.target.value, user);
-                   event.target.value = '';
-                   event.preventDefault();
-               }
-           });
+                chatDiv.addEventListener('keypress', function(event) {
+                    // Listen for Enter key
+                    if (event.keyCode === 13) {
+                        // Send a message and empty the textarea
+                        sendMessage(event.target.value, user);
+                        event.target.value = '';
+                        event.preventDefault();
+                    }
+                });
 
-           function sendMessage(message, user) {
-               socket.emit('chat message', {message: message, user: user});
-           }
+                function sendMessage(message, user) {
+                    socket.emit('chat message', {message: message, user: user});
+                }
 
-           socket.on('new user', function(user) {
-               let message = 'System message: A user connected to chat.';
-               socket.emit('system message', {message: message, user: user});
-           });
+                socket.on('new user', function(user) {
+                    let message = 'System message: A user connected to chat.';
+                    socket.emit('system message', {message: message, user: user});
+                });
 
-           socket.on('print message', function(theMsg) {
-               let template = document.querySelectorAll('template')[0];
-               let messageDiv = document.importNode(template.content.firstElementChild, true);
+                socket.on('print message', function(theMsg) {
+                    let template = document.querySelectorAll('template')[0];
+                    let messageDiv = document.importNode(template.content.firstElementChild, true);
 
-               messageDiv.querySelectorAll('.author')[0].textContent = theMsg.user;
-               messageDiv.querySelectorAll('.text')[0].textContent = theMsg.msg;
+                    messageDiv.querySelectorAll('.author')[0].textContent = theMsg.user;
+                    messageDiv.querySelectorAll('.text')[0].textContent = theMsg.msg;
 
-               let messages = document.getElementsByClassName('messages')[0];
-               messages.appendChild(messageDiv);
-           });
-       }
+                    let messages = document.getElementsByClassName('messages')[0];
+                    messages.appendChild(messageDiv);
+                });
+            }
+        }
+        window.onload = ready;
     </script>
 </body>
 </html>
