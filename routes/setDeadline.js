@@ -17,7 +17,7 @@
      if (list === 'Bucketlist') {
          Bucketlist.findOneAndUpdate(
              {_id: req.params.id},
-             {deadline: new Date(req.body.deadline)},
+             {deadline: req.body.deadline},
              function(err, model) {
                  if (err) {
                      console.log(err);

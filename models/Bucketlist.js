@@ -30,7 +30,8 @@ let bucketlistSchema = new mongoose.Schema({
         checked: {type: Boolean, default: false}
     }],
     deadline: {
-        type: Date
+        type: Date,
+        default: Date.now
     }
 });
 
