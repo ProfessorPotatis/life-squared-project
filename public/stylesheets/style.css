@@ -230,7 +230,7 @@ form {
 
 .previewImg {
     width: 40%;
-    height: 200px;
+    height: auto;
     padding-bottom: -10px;
     background-color: rgba(51,151,152,0.5);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";       /* IE 8 */
