@@ -29,10 +29,10 @@
  app.set('view engine', '.hbs');
 
  // Parsing json data
- app.use(bodyParser.json());
+ app.use(bodyParser.json({limit: '50mb'}));
 
  // Parsing of form data
- app.use(bodyParser.urlencoded({ extended: false }));
+ app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 
  // Static files
  app.use(express.static('public'));
