@@ -32,8 +32,9 @@ let bucketlistSchema = new mongoose.Schema({
     deadline: {
         type: Date
     },
-    images: [{
-        data: Buffer
+    memories: [{
+        image: Buffer,
+        text: String
     }]
 });
 

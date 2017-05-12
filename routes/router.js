@@ -87,7 +87,6 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
                            }
                        });
                 }
-                socket.emit('goToUploads', {id: box.id, list: box.list});
             });
 
             socket.on('unchecked', function(box) {

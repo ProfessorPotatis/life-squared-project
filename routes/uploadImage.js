@@ -19,7 +19,7 @@
      if (list === 'Bucketlist') {
          Bucketlist.findOneAndUpdate(
              {_id: req.params.id},
-             {$push: {'images': {data: req.body.imgSrc}}},
+             {$push: {'memories': {image: req.body.imgSrc, text: req.body.value}}},
              {safe: true, upsert: true, new: true},
              function(err, model) {
                  if (err) {
@@ -35,7 +35,7 @@
      } else if (list === 'Lifelist') {
          Lifelist.findOneAndUpdate(
              {_id: req.params.id},
-             {$push: {'images': {data: req.body.imgSrc}}},
+             {$push: {'memories': {image: req.body.imgSrc, text: req.body.value}}},
              {safe: true, upsert: true, new: true},
              function(err, model) {
                  if (err) {
