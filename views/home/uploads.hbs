@@ -5,19 +5,21 @@
     {{>validationSummary}}
     <br>
     <h4>Image preview</h4>
-    <div class="previewImg"><img id="image" /></div><br>
+    <div class="previewImg"><img id="image"/></div><br>
+    <input type="hidden" name="imgSrc" id="imgSrc">
     <input type="file" name="pic" accept="image/*" id="files"><br><br>
     <textarea rows="4" cols="30" name="value" placeholder="Write about your experience..." value="{{value}}"></textarea><br><br>
     <button class="form-button" type="submit">Add</button>
 </form>
 
 <script>
-    document.getElementById("files").onchange = function () {
+    document.getElementById('files').onchange = function () {
         let reader = new FileReader();
 
         reader.onload = function (e) {
             // get loaded data and render thumbnail.
-            document.getElementById("image").src = e.target.result;
+            document.getElementById('image').src = e.target.result;
+            document.getElementById('imgSrc').value = e.target.result;
         };
 
         // read the image file as a data URL.

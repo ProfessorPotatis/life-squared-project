@@ -30,7 +30,8 @@
             {{#if images}}
                 {{#each images}}
                     {{#if data}}
-                        <img src={{data}}/>
+                    <br>
+                        <img src="{{{data}}}" class="listImg"/>
                     {{/if}}
                 {{/each}}
             {{else}}
@@ -63,6 +64,16 @@
                 {{/each}}
             {{else}}
                 <i>No goals added yet.</i><br>
+            {{/if}}
+            {{#if images}}
+                {{#each images}}
+                    {{#if data}}
+                    <br>
+                        <img src="{{{data}}}" class="listImg"/>
+                    {{/if}}
+                {{/each}}
+            {{else}}
+                <i>There are no images.</i><br>
             {{/if}}
             <div class="addGoal"><a href="/addGoal/{{id}}?list=Lifelist" class="form-button">+ Add goal</a></div>
             {{#if deadline}}

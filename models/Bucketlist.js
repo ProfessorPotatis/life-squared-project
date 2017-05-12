@@ -33,8 +33,7 @@ let bucketlistSchema = new mongoose.Schema({
         type: Date
     },
     images: [{
-        data: Buffer,
-        contentType: String
+        data: Buffer
     }]
 });
 
