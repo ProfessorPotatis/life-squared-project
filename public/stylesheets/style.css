@@ -6,7 +6,7 @@
 
 html {
     background: url('../images/brickwall.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 /* BODY SETTINGS */
