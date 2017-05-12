@@ -28,7 +28,8 @@
                                  id: bucketlist.id,
                                  goals: bucketlist.goals,
                                  deadline: bucketlist.deadline,
-                                 checked: bucketlist.checked
+                                 checked: bucketlist.checked,
+                                 images: bucketlist.images
                              };
                          })
                      };
@@ -55,7 +56,8 @@
                                  id: lifelist.id,
                                  goals: lifelist.goals,
                                  deadline: lifelist.deadline,
-                                 checked: lifelist.checked
+                                 checked: lifelist.checked,
+                                 images: lifelist.images
                              };
                          })
                      };

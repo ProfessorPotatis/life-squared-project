@@ -18,7 +18,8 @@
             {{#if goals}}
                 {{#each goals}}
                     {{#if checked}}
-                        <input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
+                        <div><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}
+                        <a href="/uploads/{{value.id}}?list=Bucketlist" class="form-button">+ Upload image and text</a></div>
                     {{else}}
                         <input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
                     {{/if}}
@@ -26,12 +27,21 @@
             {{else}}
                 <i>No goals added yet.</i><br>
             {{/if}}
+            {{#if images}}
+                {{#each images}}
+                    {{#if data}}
+                        <img src={{data}}/>
+                    {{/if}}
+                {{/each}}
+            {{else}}
+                <i>There are no images.</i><br>
+            {{/if}}
+            <div class="addGoal"><a href="/addGoal/{{id}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
             {{#if deadline}}
                 <br><b>Deadline: </b>{{deadline}}<br>
             {{else}}
                 <div class="addGoal"><a href="/setDeadline/{{id}}?list=Bucketlist" class="form-button">+ Set deadline</a></div>
             {{/if}}
-            <div class="addGoal"><a href="/addGoal/{{id}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
         </div>
     {{/each}}
     </div>
@@ -45,7 +55,8 @@
             {{#if goals}}
                 {{#each goals}}
                     {{#if checked}}
-                        <input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
+                        <div><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}
+                        <a href="/uploads/{{value.id}}?list=Lifelist" class="form-button">+ Upload image and text</a></div>
                     {{else}}
                         <input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
                     {{/if}}
@@ -53,12 +64,12 @@
             {{else}}
                 <i>No goals added yet.</i><br>
             {{/if}}
+            <div class="addGoal"><a href="/addGoal/{{id}}?list=Lifelist" class="form-button">+ Add goal</a></div>
             {{#if deadline}}
                 <br><b>Deadline: </b>{{deadline}}<br>
             {{else}}
                 <div class="addGoal"><a href="/setDeadline/{{id}}?list=Lifelist" class="form-button">+ Set deadline</a></div>
             {{/if}}
-            <div class="addGoal"><a href="/addGoal/{{id}}?list=Lifelist" class="form-button">+ Add goal</a></div>
         </div>
     {{/each}}
 {{/if}}

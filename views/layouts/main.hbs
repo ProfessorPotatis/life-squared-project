@@ -22,6 +22,11 @@
                 let checkboxes = document.getElementsByClassName('checkbox');
                 let percentPerBox = 100 / checkboxes.length;
 
+                socket.on('goToUploads', function(data) {
+                    //window.location.href = '/uploads/' + data.id + '/' + data.list;
+                    console.log(data);
+                });
+
                 showProgress();
 
                 for (let i = 0; i < checkboxes.length; i += 1) {

@@ -1,0 +1,26 @@
+{{>navbarAuthenticated}}
+<h2>Upload image and text</h2>
+<form action="/uploads/{{id}}/{{list}}" method="post" id="myForm">
+    <!--<input type="hidden" name="_csrf" value="{{csrfToken}}">-->
+    {{>validationSummary}}
+    <br>
+    <h4>Image preview</h4>
+    <div class="previewImg"><img id="image" /></div><br>
+    <input type="file" name="pic" accept="image/*" id="files"><br><br>
+    <textarea rows="4" cols="30" name="value" placeholder="Write about your experience..." value="{{value}}"></textarea><br><br>
+    <button class="form-button" type="submit">Add</button>
+</form>
+
+<script>
+    document.getElementById("files").onchange = function () {
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("image").src = e.target.result;
+        };
+
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    };
+</script>

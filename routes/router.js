@@ -16,6 +16,7 @@ let fetchList = require('./fetchLists');
 let createList = require('./createList');
 let addGoal = require('./addGoal');
 let setDeadline = require('./setDeadline');
+let uploadImage = require('./uploadImage');
 //let emptyDatabase = require('./emptyDatabase');
 let csrf = require('csurf');
 
@@ -86,7 +87,7 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
                            }
                        });
                 }
-
+                socket.emit('goToUploads', {id: box.id, list: box.list});
             });
 
             socket.on('unchecked', function(box) {
@@ -117,6 +118,11 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
                 }
 
             });
+
+            /*socket.on('renderUploads', function(data) {
+                socket.emit('goToUploads', {id: data.id, list: data.list});
+                //res.redirect('/uploads/' + data.id + '/' + data.list);
+            });*/
 
             socket.on('chat message', function(msg) {
                 io.emit('print message', {msg: msg.message, user: msg.user});
@@ -283,9 +289,19 @@ router.route('/setDeadline/:id/:list').post(isAuthenticated, csrfProtection, fun
     setDeadline.setDeadline(req, res, next);
 });
 
+/* If authenticated, connect to chat. */
 router.route('/chat/:username').get(isAuthenticated, function(req, res) {
     myEmitter.emit('new user', {message: req.params.username});
     res.render('home/chat');
+});
+
+router.route('/uploads/:id/').get(isAuthenticated/*, csrfProtection*/, function(req, res) {
+    res.render('home/uploads', ({id: req.params.id, list: req.query.list}));
+});
+
+/* If authenticated, post image and text to specified list. */
+router.route('/uploads/:id/:list').post(isAuthenticated/*, csrfProtection*/, function(req, res, next) {
+    uploadImage.uploadImage(req, res, next);
 });
 
 
