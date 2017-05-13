@@ -13,3 +13,84 @@
     </div>
     <textarea class="messageArea noMove"></textarea>
 </div>
+
+<div class="chatUsers">
+    <h3>Connected users</h3>
+    <br>
+    <div class="theUsers">
+        <template>
+            <div class="connectedUser">
+                <p class="user"></p>
+            </div>
+        </template>
+    </div>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+// Connect to socket.io.
+let socket = io();
+
+let url = window.location.pathname;
+let urlArray = url.split('/');
+let path = urlArray[urlArray.length - 2];
+
+let userArray = [];
+let template2 = document.querySelectorAll('template')[1];
+let connectedUser = document.importNode(template2.content.firstElementChild, true);
+
+if (path === 'chat') {
+    let chatDiv = document.getElementsByClassName('chat')[0];
+    let user = urlArray[urlArray.length - 1];
+
+    addUserToList(user);
+
+    chatDiv.addEventListener('keypress', function(event) {
+        // Listen for Enter key
+        if (event.keyCode === 13) {
+            // Send a message and empty the textarea
+            sendMessage(event.target.value, user);
+            event.target.value = '';
+            event.preventDefault();
+        }
+    });
+
+    function sendMessage(message, user) {
+        socket.emit('chat message', {message: message, user: user});
+    }
+
+    socket.on('new user', function(user) {
+        let message = 'System message: A user connected to chat.';
+        socket.emit('system message', {message: message, user: user});
+
+        //addUserToList(user);
+    });
+
+    socket.on('print message', function(theMsg) {
+        let template = document.querySelectorAll('template')[0];
+        let messageDiv = document.importNode(template.content.firstElementChild, true);
+
+        messageDiv.querySelectorAll('.author')[0].textContent = theMsg.user;
+        messageDiv.querySelectorAll('.text')[0].textContent = theMsg.msg;
+
+        let messages = document.getElementsByClassName('messages')[0];
+        messages.appendChild(messageDiv);
+
+        addUserToList(theMsg.user);
+    });
+
+    function addUserToList(user) {
+        if (!userArray.includes(user)) {
+            userArray.push(user);
+        }
+
+        let theUsers = document.getElementsByClassName('theUsers')[0];
+
+        connectedUser.querySelectorAll('.user')[0].textContent = '';
+        connectedUser.querySelectorAll('.user')[0].textContent = userArray;
+
+        theUsers.appendChild(connectedUser);
+    }
+}
+</script>

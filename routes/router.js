@@ -118,11 +118,6 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
 
             });
 
-            /*socket.on('renderUploads', function(data) {
-                socket.emit('goToUploads', {id: data.id, list: data.list});
-                //res.redirect('/uploads/' + data.id + '/' + data.list);
-            });*/
-
             socket.on('chat message', function(msg) {
                 io.emit('print message', {msg: msg.message, user: msg.user});
             });
@@ -290,8 +285,8 @@ router.route('/setDeadline/:id/:list').post(isAuthenticated, csrfProtection, fun
 
 /* If authenticated, connect to chat. */
 router.route('/chat/:username').get(isAuthenticated, function(req, res) {
-    myEmitter.emit('new user', {message: req.params.username});
     res.render('home/chat');
+    myEmitter.emit('new user', {message: req.params.username});
 });
 
 router.route('/uploads/:id/').get(isAuthenticated/*, csrfProtection*/, function(req, res) {
