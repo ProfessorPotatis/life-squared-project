@@ -37,6 +37,7 @@ let urlArray = url.split('/');
 let path = urlArray[urlArray.length - 2];
 
 let userArray = [];
+
 let template2 = document.querySelectorAll('template')[1];
 let connectedUser = document.importNode(template2.content.firstElementChild, true);
 
@@ -63,8 +64,6 @@ if (path === 'chat') {
     socket.on('new user', function(user) {
         let message = 'System message: A user connected to chat.';
         socket.emit('system message', {message: message, user: user});
-
-        //addUserToList(user);
     });
 
     socket.on('print message', function(theMsg) {
