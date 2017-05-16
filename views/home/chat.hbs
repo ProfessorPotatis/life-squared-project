@@ -16,7 +16,6 @@
 
 <div class="chatUsers">
     <h3>Connected users</h3>
-    <br>
     <div class="theUsers">
         <template>
             <div class="connectedUser">
@@ -36,16 +35,12 @@ let url = window.location.pathname;
 let urlArray = url.split('/');
 let path = urlArray[urlArray.length - 2];
 
-let userArray = [];
-
 let template2 = document.querySelectorAll('template')[1];
 let connectedUser = document.importNode(template2.content.firstElementChild, true);
 
 if (path === 'chat') {
     let chatDiv = document.getElementsByClassName('chat')[0];
     let user = urlArray[urlArray.length - 1];
-
-    addUserToList(user);
 
     chatDiv.addEventListener('keypress', function(event) {
         // Listen for Enter key
@@ -76,18 +71,21 @@ if (path === 'chat') {
         let messages = document.getElementsByClassName('messages')[0];
         messages.appendChild(messageDiv);
 
-        addUserToList(theMsg.user);
+        if (theMsg.users) {
+            addUserToList(theMsg.users);
+        }
     });
 
-    function addUserToList(user) {
-        if (!userArray.includes(user)) {
-            userArray.push(user);
-        }
-
+    function addUserToList(users) {
         let theUsers = document.getElementsByClassName('theUsers')[0];
 
         connectedUser.querySelectorAll('.user')[0].textContent = '';
-        connectedUser.querySelectorAll('.user')[0].textContent = userArray;
+
+        connectedUser.querySelectorAll('.user')[0].setAttribute('style', 'white-space: pre;');
+
+        for (let i = 0; i < users.length; i += 1) {
+            connectedUser.querySelectorAll('.user')[0].textContent += users[i] + '\r\n';
+        }
 
         theUsers.appendChild(connectedUser);
     }

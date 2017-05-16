@@ -28,6 +28,8 @@ let sess;
 
 let bucket, life;
 
+let userArray = [];
+
 let events = require('events');
 class MyEmitter extends events {}
 const myEmitter = new MyEmitter();
@@ -119,20 +121,24 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
             });
 
             socket.on('chat message', function(msg) {
-                io.emit('print message', {msg: msg.message, user: msg.user});
+                io.emit('print message', {msg: msg.message, user: msg.user, users: userArray});
             });
 
             myEmitter.on('new user', function(data) {
+                if (!userArray.includes(data.message)) {
+                    userArray.push(data.message);
+                }
                 // Send data to client
                 socket.emit('new user', data.message);
             });
 
             socket.on('system message', function(data) {
-                socket.emit('print message', {msg: data.message, user: data.user});
+                socket.emit('print message', {msg: data.message, user: data.user, users: userArray});
             });
 
             // The connection was closed
-            socket.on('disconnect', function() {
+            socket.on('disconnect', function(data) {
+                console.log(data);
                 console.log('Closed Connection ');
             });
         });
