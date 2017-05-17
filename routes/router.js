@@ -50,7 +50,7 @@ let isAuthenticated = function(req, res, next) {
 };
 
 
-router.route('/').get(/*csrfProtection,*/ function(req, res) {
+router.route('/').get(/*csrfProtection,*/ function(req, res, next) {
     /*emptyDatabase.removeUser();
     emptyDatabase.removeBucketlist();
     emptyDatabase.removeLifelist();*/
@@ -161,6 +161,38 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
                            data.save();
                            console.log(data.locked);
                        });
+                }
+            });
+
+            socket.on('addGoal', function(box) {
+                if (box.list === 'bucketlist') {
+                    Bucketlist.findOneAndUpdate(
+                        {_id: box.id},
+                        {$push: {'goals': {title: box.goal}}},
+                        {safe: true, upsert: true, new: true},
+                        function(err, model) {
+                            if (err) {
+                                console.log(err);
+                                socket.emit('unsuccessful');
+                                next(err);
+                            }
+                            socket.emit('success');
+                        }
+                    );
+                } else if (box.list === 'lifelist') {
+                    Lifelist.findOneAndUpdate(
+                        {_id: box.id},
+                        {$push: {'goals': {title: box.goal}}},
+                        {safe: true, upsert: true, new: true},
+                        function(err, model) {
+                            if (err) {
+                                console.log(err);
+                                socket.emit('unsuccessful');
+                                next(err);
+                            }
+                            socket.emit('success');
+                        }
+                    );
                 }
             });
 
@@ -330,6 +362,10 @@ router.route('/uploads/:id/').get(isAuthenticated/*, csrfProtection*/, function(
 /* If authenticated, post image and text to specified list. */
 router.route('/uploads/:id/:list').post(isAuthenticated/*, csrfProtection*/, function(req, res, next) {
     uploadImage.uploadImage(req, res, next);
+});
+
+router.route('/inspiration').get(isAuthenticated, function(req, res) {
+    res.render('home/inspiration', {bucketlists: bucket[0], lifelist: life});
 });
 
 
