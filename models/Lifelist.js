@@ -35,7 +35,11 @@ let lifelistSchema = new mongoose.Schema({
     memories: [{
         image: Buffer,
         text: String
-    }]
+    }],
+    locked: {
+        type: Boolean,
+        default: false
+    }
 });
 
 // Create a model using the schema.

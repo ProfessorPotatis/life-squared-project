@@ -12,7 +12,12 @@
     <div class="bucketlists">
     {{#each bucketlists as |value key|}}
         <div class="bucketlist">
-            <h4>{{title}}</h4><br>
+            <h4 class="inline">{{title}}</h4>
+            {{#if locked}}
+                <img class="lockImg" src="/images/padlock-red.png">
+            {{else}}
+                <img class="lockImg" src="/images/padlock-green.png">
+            {{/if}}<br>
             <b>Created at: </b>{{createdAt}}<br>
             <b>Goals:</b><br>
             {{#if goals}}
@@ -39,9 +44,13 @@
                     {{/if}}
                 {{/each}}
             {{else}}
-                <i>There are no memories saved yet.</i><br>
+                <br><i>There are no memories saved yet.</i><br>
             {{/if}}
-            <div class="addGoal"><a href="/addGoal/{{id}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
+            {{#if locked}}
+                <br><i>This list is locked.</i><br>
+            {{else}}
+                <div class="addGoal"><a href="/addGoal/{{id}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
+            {{/if}}
             {{#if deadline}}
                 <br><b>Deadline: </b>{{deadline}}<br>
             {{else}}
@@ -54,7 +63,12 @@
 {{#if lifelist }}
     {{#each lifelist as |value key|}}
         <div class="lifelist">
-            <h4>{{title}}</h4><br>
+            <h4 class="inline">{{title}}</h4>
+            {{#if locked}}
+                <img class="lockImg" src="/images/padlock-red.png">
+            {{else}}
+                <img class="lockImg" src="/images/padlock-green.png">
+            {{/if}}<br>
             <b>Created at: </b>{{createdAt}}<br>
             <b>Goals:</b><br>
             {{#if goals}}
@@ -81,9 +95,13 @@
                     {{/if}}
                 {{/each}}
             {{else}}
-                <i>There are no memories saved yet.</i><br>
+                <br><i>There are no memories saved yet.</i><br>
             {{/if}}
-            <div class="addGoal"><a href="/addGoal/{{id}}?list=Lifelist" class="form-button">+ Add goal</a></div>
+            {{#if locked}}
+                <br><i>This list is locked.</i><br>
+            {{else}}
+                <div class="addGoal"><a href="/addGoal/{{id}}?list=Lifelist" class="form-button">+ Add goal</a></div>
+            {{/if}}
             {{#if deadline}}
                 <br><b>Deadline: </b>{{deadline}}<br>
             {{else}}

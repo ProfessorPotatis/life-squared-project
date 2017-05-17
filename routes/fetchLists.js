@@ -29,7 +29,8 @@
                                  goals: bucketlist.goals,
                                  deadline: bucketlist.deadline,
                                  checked: bucketlist.checked,
-                                 memories: bucketlist.memories
+                                 memories: bucketlist.memories,
+                                 locked: bucketlist.locked
                              };
                          })
                      };
@@ -57,7 +58,8 @@
                                  goals: lifelist.goals,
                                  deadline: lifelist.deadline,
                                  checked: lifelist.checked,
-                                 memories: lifelist.memories
+                                 memories: lifelist.memories,
+                                 locked: lifelist.locked
                              };
                          })
                      };

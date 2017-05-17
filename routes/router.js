@@ -136,6 +136,34 @@ router.route('/').get(/*csrfProtection,*/ function(req, res) {
                 socket.emit('print message', {msg: data.message, user: data.user, users: userArray});
             });
 
+            socket.on('lockList', function(box) {
+                if (box.list === 'Bucketlist') {
+                    Bucketlist.findById(box.id).exec()
+                       .then(function(data) {
+                           console.log(data.locked);
+                           if (data.locked === false) {
+                               data.locked = true;
+                           } else if (data.locked === true) {
+                               data.locked = false;
+                           }
+                           data.save();
+                           console.log(data.locked);
+                       });
+                } else if (box.list === 'Lifelist') {
+                    Lifelist.findById(box.id).exec()
+                       .then(function(data) {
+                           console.log(data.locked);
+                           if (data.locked === false) {
+                               data.locked = true;
+                           } else if (data.locked === true) {
+                               data.locked = false;
+                           }
+                           data.save();
+                           console.log(data.locked);
+                       });
+                }
+            });
+
             // The connection was closed
             socket.on('disconnect', function(data) {
                 console.log(data);
