@@ -1,5 +1,6 @@
 {{>navbarAuthenticated}}
 <h2>Upload image and text</h2>
+{{id}} {{list}}
 <form action="/uploads/{{id}}/{{list}}" method="post" id="myForm">
     <!--<input type="hidden" name="_csrf" value="{{csrfToken}}">-->
     {{>validationSummary}}
