@@ -315,12 +315,12 @@ router.route('/setDeadline/:id').get(isAuthenticated, csrfProtection, function(r
             .then(function(data) {
                 if (data.deadline) {
                     // Render userpage and show a message.
-                    res.render('home/userPage', {
+                    res.render('home/userPage', ({
                         validationErrors: ['You have already set a deadline.'],
                         username: data.user,
                         bucketlists: bucket[0],
                         lifelist: life
-                    });
+                    }));
                 } else {
                     res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
                 }
@@ -330,12 +330,12 @@ router.route('/setDeadline/:id').get(isAuthenticated, csrfProtection, function(r
             .then(function(data) {
                 if (data.deadline) {
                     // Render userpage and show a message.
-                    res.render('home/userPage', {
+                    res.render('home/userPage', ({
                         validationErrors: ['You have already set a deadline.'],
                         username: data.user,
                         bucketlists: bucket[0],
                         lifelist: life
-                    });
+                    }));
                 } else {
                     res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
                 }

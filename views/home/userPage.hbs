@@ -23,10 +23,11 @@
             {{#if goals}}
                 {{#each goals}}
                     {{#if checked}}
-                        <div><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}
+                        <div class="checkboxDiv"><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}
                         <a href="/uploads/{{value.id}}?list=Bucketlist" class="form-button upload">+ Upload image and text</a></div>
                     {{else}}
-                        <input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
+                        <div class="checkboxDiv"><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}
+                        <a href="/uploads/{{value.id}}?list=Bucketlist" class="form-button upload">+ Upload image and text</a></div>
                     {{/if}}
                 {{/each}}
             {{else}}
@@ -74,10 +75,11 @@
             {{#if goals}}
                 {{#each goals}}
                     {{#if checked}}
-                        <div><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}
-                        <a href="/uploads/{{value.id}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
-                    {{else}}
-                        <input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
+                    <div class="checkboxDiv"><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}
+                    <a href="/uploads/{{value.id}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
+                {{else}}
+                    <div class="checkboxDiv"><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}
+                    <a href="/uploads/{{value.id}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
                     {{/if}}
                 {{/each}}
             {{else}}
@@ -121,8 +123,9 @@ function ready() {
     let url = window.location.pathname;
     let urlArray = url.split('/');
     let path = urlArray[urlArray.length - 1];
+    let path2 = urlArray[urlArray.length - 2];
 
-    if (path === 'user') {
+    if (path === 'user' || path2 === 'setDeadline') {
         let checkboxes = document.getElementsByClassName('checkbox');
         let percentPerBox = 100 / checkboxes.length;
         let theCount = 0;
@@ -141,10 +144,12 @@ function ready() {
 
             for (let x = 0; x < checkboxes.length; x += 1) {
                 if (checkboxes[x].checked) {
+                    checkboxes[x].nextElementSibling.removeAttribute('hidden');
                     count += 1;
                     // When checkbox is checked, send message to server.
                     socket.emit('checked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
                 } else if (!checkboxes[x].checked) {
+                    checkboxes[x].nextElementSibling.setAttribute('hidden', true);
                     // When checkbox is unchecked, send message to server.
                     socket.emit('unchecked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
                 }

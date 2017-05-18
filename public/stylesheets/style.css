@@ -5,12 +5,14 @@
 }
 
 html {
-    background: url('../images/brickwall.jpg') no-repeat center center fixed;
-    background-size: auto auto;
+    /*background: url('../images/brickwall.jpg') no-repeat center center fixed;
+    background-size: auto auto;*/
 }
 
 /* BODY SETTINGS */
 body {
+    background: url('../images/brickwall.jpg') no-repeat center center fixed;
+    background-size: auto auto;
     color: #fff;
 }
 
