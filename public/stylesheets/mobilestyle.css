@@ -45,29 +45,48 @@ a {
 
 /* NAVIGATION SETTINGS */
 .navigation {
-    position: fixed;
+    position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    left: 5;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.navMobile {
+    cursor: pointer;
+    background: #339798 url('../images/menu-icon.png') no-repeat center center;
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
 }
 
 .navList {
-    font-family: 'BeonRegular';
     list-style: none;
-    background-color: #339798;
-    padding: 10px;
+    font-family: 'BeonRegular';
+    display: none;
+    position: absolute;
+    overflow: auto;
+    z-index: 1;
+    min-width: 200px;
 }
-.navList li {
-    display: inline;
-}
+
 .navList li a {
-    padding: 10px;
-    font-size: 18px;
-    color: #dcffff;
+    text-decoration: none;
+    display: block;
+    padding: 15px 20px;
+    color: #FFF;
+    background: #339798;
+
 }
+
 .navList li a:hover {
-    background-color: #2d7f7e;
+    background: #2d7f7e;
 }
+
+.show {
+    display: block;
+}
+
 
 /* CONTAINER SETTINGS */
 .container {
@@ -152,10 +171,25 @@ form {
     border-radius: 5px;
 }
 
+/* ALL LIST SETTINGS */
+.listImg {
+    width: 10%;
+    height: 10%;
+}
+
+.lockImg {
+    width: 20px;
+    height: 20px;
+    float: right;
+}
+
+.inline {
+    display: inline;
+}
+
 /* BUCKETLIST SETTINGS */
 .bucketlists {
-    float: left;
-    width: 48%;
+    width: 100%;
 }
 .bucketlist {
     padding: 5px;
@@ -170,9 +204,8 @@ form {
     padding: 5px;
     border-radius: 5px;
     color: black;
-    float: right;
     background-color: lightgrey;
-    width: 48%;
+    width: 98.6%;
     margin-bottom: 5px;
 }
 
@@ -187,13 +220,12 @@ form {
 
 /* CHAT SETTINGS */
 .center {
-    margin: auto;
-    width: 550px;
+    margin: auto auto;
+    width: 270px;
 }
 
 .chat {
     text-align: left;
-    float: left;
     height: 350px;
     width: 250px;
     padding: 10px 10px;
@@ -234,8 +266,8 @@ form {
 }
 
 .chatUsers {
+    margin-top: 5px;
     text-align: left;
-    float: right;
     height: 210px;
     width: 250px;
     padding: 10px 10px;
@@ -260,6 +292,7 @@ form {
 }
 
 
+/* UPLOAD SETTINGS */
 .info {
     height: 100px;
     width: 250px;
@@ -275,8 +308,6 @@ form {
     border-radius: 5px;
 }
 
-
-
 .previewImg {
     width: 40%;
 }
@@ -286,31 +317,11 @@ form {
     height: 100%;
 }
 
-.listImg {
-    width: 10%;
-    height: 10%;
-}
 
-.lockImg {
-    width: 20px;
-    height: 20px;
-    float: right;
-}
-
-.inline {
-    display: inline;
-}
-
-
-
-
-
-
-
-
+/* INSPIRATION SETTINGS */
 .imageContainer {
     position: relative;
-    width: 49%;
+    width: 100%;
     display: inline-block;
 }
 
