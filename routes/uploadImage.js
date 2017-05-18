@@ -50,6 +50,8 @@
                  }
              );
          }
+     } else {
+         res.render('home/uploads.hbs', {validationErrors: 'You may only upload images.', id: req.params.id, list: req.query.list});
      }
  }
 
