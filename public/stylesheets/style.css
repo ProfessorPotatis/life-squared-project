@@ -152,6 +152,22 @@ form {
     border-radius: 5px;
 }
 
+/* ALL LIST SETTINGS */
+.listImg {
+    width: 10%;
+    height: 10%;
+}
+
+.lockImg {
+    width: 20px;
+    height: 20px;
+    float: right;
+}
+
+.inline {
+    display: inline;
+}
+
 /* BUCKETLIST SETTINGS */
 .bucketlists {
     float: left;
@@ -260,6 +276,7 @@ form {
 }
 
 
+/* UPLOAD SETTINGS */
 .info {
     height: 100px;
     width: 250px;
@@ -286,28 +303,8 @@ form {
     height: 100%;
 }
 
-.listImg {
-    width: 10%;
-    height: 10%;
-}
 
-.lockImg {
-    width: 20px;
-    height: 20px;
-    float: right;
-}
-
-.inline {
-    display: inline;
-}
-
-
-
-
-
-
-
-
+/* INSPIRATION SETTINGS */
 .imageContainer {
     position: relative;
     width: 49%;
