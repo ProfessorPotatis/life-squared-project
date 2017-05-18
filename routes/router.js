@@ -117,7 +117,6 @@ router.route('/').get(/*csrfProtection,*/ function(req, res, next) {
                             }
                         });
                 }
-
             });
 
             socket.on('chat message', function(msg) {

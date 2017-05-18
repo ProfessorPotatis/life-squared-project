@@ -7,8 +7,9 @@
     <h4>Image preview</h4>
     <div class="previewImg"><img id="image"/></div><br>
     <input type="hidden" name="imgSrc" id="imgSrc">
+    <input type="hidden" name="typeOfFile" id="typeOfFile">
     <input type="file" name="pic" accept="image/*" id="files"><br><br>
-    <textarea rows="4" cols="30" name="value" placeholder="Write about your experience..." value="{{value}}"></textarea><br><br>
+    <textarea rows="4" cols="30" name="value" placeholder="Write about your experience..." value="{{value}}" required="required"></textarea><br><br>
     <button class="form-button" type="submit">Add</button>
 </form>
 
@@ -23,6 +24,21 @@
         };
 
         // read the image file as a data URL.
+        document.getElementById('typeOfFile').value = this.files[0].type;
         reader.readAsDataURL(this.files[0]);
     };
+
+    let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    let browserVersion = /10_3/.test(navigator.userAgent) && !window.MSStream;
+
+    if (iOS && !browserVersion) {
+        let form = document.getElementById('myForm');
+         form.noValidate = true;
+         form.addEventListener('submit', function(event) {
+            if (!event.target.checkValidity()) {
+                 event.preventDefault();
+                 alert('Error! You must fill all required fields.');
+        }
+        }, false);
+    }
 </script>
