@@ -4,12 +4,18 @@
     <h3>Life² chat</h3>
     <br>
     <div class="messages">
-        <template>
+        <script type="text/x-html-template">
             <div class="message">
                 <p class="author"></p>
                 <p class="text"></p>
             </div>
-        </template>
+        </script>
+        <!--<template>
+            <div class="message">
+                <p class="author"></p>
+                <p class="text"></p>
+            </div>
+        </template>-->
     </div>
     <textarea class="messageArea noMove"></textarea>
     <button class="form-button send">Send</button>
@@ -18,18 +24,23 @@
 <div class="chatUsers">
     <h3>Connected users</h3>
     <div class="theUsers">
-        <template>
+        <script type="text/x-html-template">
             <div class="connectedUser">
                 <p class="user"></p>
             </div>
-        </template>
+        </script>
+        <!--<template>
+            <div class="connectedUser">
+                <p class="user"></p>
+            </div>
+        </template>-->
     </div>
 </div>
 </div>
 
 
 <script src="/socket.io/socket.io.js"></script>
-<script type="text/x-html-template">
+<script>
 // Connect to socket.io.
 let socket = io();
 
