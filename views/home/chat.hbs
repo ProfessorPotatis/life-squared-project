@@ -12,6 +12,7 @@
         </template>
     </div>
     <textarea class="messageArea noMove"></textarea>
+    <button class="form-button send">Send</button>
 </div>
 
 <div class="chatUsers">
@@ -42,6 +43,13 @@ let connectedUser = document.importNode(template2.content.firstElementChild, tru
 if (path === 'chat') {
     let chatDiv = document.getElementsByClassName('chat')[0];
     let user = urlArray[urlArray.length - 1];
+    let sendBtn = document.getElementsByClassName('send')[0];
+
+    sendBtn.addEventListener('click', function(event) {
+        sendMessage(event.target.previousElementSibling.value, user);
+        event.target.previousElementSibling.value = '';
+        event.preventDefault();
+    });
 
     chatDiv.addEventListener('keypress', function(event) {
         // Listen for Enter key

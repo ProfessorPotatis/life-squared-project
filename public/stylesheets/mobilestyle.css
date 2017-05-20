@@ -230,7 +230,7 @@ form {
 
 .chat {
     text-align: left;
-    height: 350px;
+    height: 370px;
     width: 250px;
     padding: 10px 10px;
     padding-top: 10px;
@@ -267,6 +267,10 @@ form {
     margin-top: 5px;
     padding: 5px;
     height: 40px;
+}
+
+.send {
+    float: right;
 }
 
 .chatUsers {
