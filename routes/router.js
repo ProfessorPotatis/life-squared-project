@@ -50,7 +50,7 @@ let isAuthenticated = function(req, res, next) {
 };
 
 
-router.route('/').get(/*csrfProtection,*/ function(req, res, next) {
+router.route('/').get(csrfProtection, function(req, res, next) {
     /*emptyDatabase.removeUser();
     emptyDatabase.removeBucketlist();
     emptyDatabase.removeLifelist();*/
@@ -139,26 +139,22 @@ router.route('/').get(/*csrfProtection,*/ function(req, res, next) {
                 if (box.list === 'Bucketlist') {
                     Bucketlist.findById(box.id).exec()
                        .then(function(data) {
-                           console.log(data.locked);
                            if (data.locked === false) {
                                data.locked = true;
                            } else if (data.locked === true) {
                                data.locked = false;
                            }
                            data.save();
-                           console.log(data.locked);
                        });
                 } else if (box.list === 'Lifelist') {
                     Lifelist.findById(box.id).exec()
                        .then(function(data) {
-                           console.log(data.locked);
                            if (data.locked === false) {
                                data.locked = true;
                            } else if (data.locked === true) {
                                data.locked = false;
                            }
                            data.save();
-                           console.log(data.locked);
                        });
                 }
             });
@@ -197,7 +193,6 @@ router.route('/').get(/*csrfProtection,*/ function(req, res, next) {
 
             // The connection was closed
             socket.on('disconnect', function(data) {
-                console.log(data);
                 console.log('Closed Connection ');
             });
         });
@@ -208,7 +203,7 @@ router.route('/').get(/*csrfProtection,*/ function(req, res, next) {
     if (sess.username) {
         res.redirect('/user');
     } else {
-        res.render('home/index', ({username: undefined, password: undefined}/*, {csrfToken: req.csrfToken()}*/));
+        res.render('home/index', ({username: undefined, password: undefined}, {csrfToken: req.csrfToken()}));
     }
 });
 
@@ -229,12 +224,12 @@ router.route('/register').post(csrfProtection, function(req, res, next) {
 });
 
 /* If csrfToken is valid, user exist and password is correct: log in user. */
-router.route('/login').post(/*csrfProtection,*/ function(req, res, next) {
+router.route('/login').post(csrfProtection, function(req, res, next) {
     login.loginUser(req, res, sess, next);
 });
 
 /* If authenticated, show admin page and fetch users lists. */
-router.route('/user').get(isAuthenticated, function(req, res/*, next*/) {
+router.route('/user').get(isAuthenticated, function(req, res) {
     sess = req.session;
 
     Promise.all([fetchList.bucketlist(req, res, sess)]).then(function(theBucketlists) {
@@ -299,17 +294,17 @@ router.route('/createLifelist/:username').post(isAuthenticated, csrfProtection, 
 });
 
 /* If authenticated, show create page for goal. Use csrfToken. */
-router.route('/addGoal/:id').get(isAuthenticated, csrfProtection, function(req, res) {
-    res.render('home/addGoal', ({goal: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
+router.route('/addGoal/:id/:username').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/addGoal', ({goal: undefined, id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
 });
 
 /* If authenticated and the csrfToken is valid, post goal to specified list. */
-router.route('/addGoal/:id/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
+router.route('/addGoal/:id/:username/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
     addGoal.addGoal(req, res, next);
 });
 
 /* If authenticated, show create page for deadline. Use csrfToken. */
-router.route('/setDeadline/:id').get(isAuthenticated, csrfProtection, function(req, res) {
+router.route('/setDeadline/:id/:username').get(isAuthenticated, csrfProtection, function(req, res) {
     if (req.query.list === 'Bucketlist') {
         Bucketlist.findOne({_id: req.params.id}).exec()
             .then(function(data) {
@@ -322,7 +317,7 @@ router.route('/setDeadline/:id').get(isAuthenticated, csrfProtection, function(r
                         lifelist: life
                     }));
                 } else {
-                    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
+                    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
                 }
             });
     } else if (req.query.list === 'Lifelist') {
@@ -337,34 +332,34 @@ router.route('/setDeadline/:id').get(isAuthenticated, csrfProtection, function(r
                         lifelist: life
                     }));
                 } else {
-                    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, list: req.query.list, csrfToken: req.csrfToken()}));
+                    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
                 }
             });
     }
 });
 
 /* If authenticated and the csrfToken is valid, post deadline to specified list. */
-router.route('/setDeadline/:id/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
+router.route('/setDeadline/:id/:username/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
     setDeadline.setDeadline(req, res, next);
 });
 
 /* If authenticated, connect to chat. */
 router.route('/chat/:username').get(isAuthenticated, function(req, res) {
-    res.render('home/chat');
+    res.render('home/chat', ({username: req.params.username}));
     myEmitter.emit('new user', {message: req.params.username});
 });
 
-router.route('/uploads/:id/').get(isAuthenticated/*, csrfProtection*/, function(req, res) {
-    res.render('home/uploads', ({id: req.params.id, list: req.query.list}));
+router.route('/uploads/:id/:username').get(isAuthenticated, csrfProtection, function(req, res) {
+    res.render('home/uploads', ({id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
 });
 
 /* If authenticated, post image and text to specified list. */
-router.route('/uploads/:id/:list').post(isAuthenticated/*, csrfProtection*/, function(req, res, next) {
+router.route('/uploads/:id/:username/:list').post(isAuthenticated, csrfProtection, function(req, res, next) {
     uploadImage.uploadImage(req, res, next);
 });
 
-router.route('/inspiration').get(isAuthenticated, function(req, res) {
-    res.render('home/inspiration', {bucketlists: bucket[0], lifelist: life});
+router.route('/inspiration/:username').get(isAuthenticated, function(req, res) {
+    res.render('home/inspiration', ({bucketlists: bucket[0], lifelist: life, username: req.params.username}));
 });
 
 

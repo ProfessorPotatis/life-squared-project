@@ -24,10 +24,10 @@
                 {{#each goals}}
                     {{#if checked}}
                         <div class="checkboxDiv"><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
-                        <a href="/uploads/{{value.id}}?list=Bucketlist" class="form-button upload">+ Upload image and text</a></div>
+                        <a href="/uploads/{{value.id}}/{{value.username}}?list=Bucketlist" class="form-button upload">+ Upload image and text</a></div>
                     {{else}}
                         <div class="checkboxDiv"><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
-                        <a href="/uploads/{{value.id}}?list=Bucketlist" class="form-button upload">+ Upload image and text</a></div>
+                        <a href="/uploads/{{value.id}}/{{value.username}}?list=Bucketlist" class="form-button upload">+ Upload image and text</a></div>
                     {{/if}}
                 {{/each}}
             {{else}}
@@ -50,12 +50,12 @@
             {{#if locked}}
                 <br><i>This list is locked.</i><br>
             {{else}}
-                <div class="addGoal"><a href="/addGoal/{{id}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
+                <div class="addGoal"><a href="/addGoal/{{id}}/{{username}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
             {{/if}}
             {{#if deadline}}
                 <br><b>Deadline: </b>{{deadline}}<br>
             {{else}}
-                <div class="addGoal"><a href="/setDeadline/{{id}}?list=Bucketlist" class="form-button">+ Set deadline</a></div>
+                <div class="addGoal"><a href="/setDeadline/{{id}}/{{username}}?list=Bucketlist" class="form-button">+ Set deadline</a></div>
             {{/if}}
         </div>
     {{/each}}
@@ -76,10 +76,10 @@
                 {{#each goals}}
                     {{#if checked}}
                     <div class="checkboxDiv"><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
-                    <a href="/uploads/{{value.id}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
+                    <a href="/uploads/{{value.id}}/{{value.username}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
                 {{else}}
                     <div class="checkboxDiv"><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
-                    <a href="/uploads/{{value.id}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
+                    <a href="/uploads/{{value.id}}/{{value.username}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
                     {{/if}}
                 {{/each}}
             {{else}}
@@ -102,12 +102,12 @@
             {{#if locked}}
                 <br><i>This list is locked.</i><br>
             {{else}}
-                <div class="addGoal"><a href="/addGoal/{{id}}?list=Lifelist" class="form-button">+ Add goal</a></div>
+                <div class="addGoal"><a href="/addGoal/{{id}}/{{username}}?list=Lifelist" class="form-button">+ Add goal</a></div>
             {{/if}}
             {{#if deadline}}
                 <br><b>Deadline: </b>{{deadline}}<br>
             {{else}}
-                <div class="addGoal"><a href="/setDeadline/{{id}}?list=Lifelist" class="form-button">+ Set deadline</a></div>
+                <div class="addGoal"><a href="/setDeadline/{{id}}/{{username}}?list=Lifelist" class="form-button">+ Set deadline</a></div>
             {{/if}}
         </div>
     {{/each}}
@@ -120,44 +120,37 @@ function ready() {
     // Connect to socket.io.
     let socket = io();
 
-    let url = window.location.pathname;
-    let urlArray = url.split('/');
-    let path = urlArray[urlArray.length - 1];
-    let path2 = urlArray[urlArray.length - 2];
+    let checkboxes = document.getElementsByClassName('checkbox');
+    let percentPerBox = 100 / checkboxes.length;
+    let theCount = 0;
 
-    if (path === 'user' || path2 === 'setDeadline') {
-        let checkboxes = document.getElementsByClassName('checkbox');
-        let percentPerBox = 100 / checkboxes.length;
-        let theCount = 0;
+    for (let i = 0; i < checkboxes.length; i += 1) {
+        checkboxes[i].addEventListener('click', showProgress);
+        if (theCount === 0 && checkboxes[i].checked) {
+            theCount += 1;
+            showProgress();
+        }
+    }
 
-        for (let i = 0; i < checkboxes.length; i += 1) {
-            checkboxes[i].addEventListener('click', showProgress);
-            if (theCount === 0 && checkboxes[i].checked) {
-                theCount += 1;
-                showProgress();
+    function showProgress() {
+        let progressBar = document.getElementById('myBar');
+        let count = 0;
+
+        for (let x = 0; x < checkboxes.length; x += 1) {
+            if (checkboxes[x].checked) {
+                checkboxes[x].nextElementSibling.nextElementSibling.removeAttribute('hidden');
+                count += 1;
+                // When checkbox is checked, send message to server.
+                socket.emit('checked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
+            } else if (!checkboxes[x].checked) {
+                checkboxes[x].nextElementSibling.nextElementSibling.setAttribute('hidden', true);
+                // When checkbox is unchecked, send message to server.
+                socket.emit('unchecked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
             }
         }
 
-        function showProgress() {
-            let progressBar = document.getElementById('myBar');
-            let count = 0;
-
-            for (let x = 0; x < checkboxes.length; x += 1) {
-                if (checkboxes[x].checked) {
-                    checkboxes[x].nextElementSibling.nextElementSibling.removeAttribute('hidden');
-                    count += 1;
-                    // When checkbox is checked, send message to server.
-                    socket.emit('checked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
-                } else if (!checkboxes[x].checked) {
-                    checkboxes[x].nextElementSibling.nextElementSibling.setAttribute('hidden', true);
-                    // When checkbox is unchecked, send message to server.
-                    socket.emit('unchecked', {message: checkboxes[x].value, id: checkboxes[x].id, list: checkboxes[x].getAttribute('data-list')});
-                }
-            }
-
-            let percent = percentPerBox * count;
-            progressBar.style.width = percent + '%';
-        }
+        let percent = percentPerBox * count;
+        progressBar.style.width = percent + '%';
     }
 }
 window.onload = ready();

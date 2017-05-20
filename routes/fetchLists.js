@@ -30,7 +30,8 @@
                                  deadline: bucketlist.deadline,
                                  checked: bucketlist.checked,
                                  memories: bucketlist.memories,
-                                 locked: bucketlist.locked
+                                 locked: bucketlist.locked,
+                                 username: bucketlist.user
                              };
                          })
                      };
@@ -59,7 +60,8 @@
                                  deadline: lifelist.deadline,
                                  checked: lifelist.checked,
                                  memories: lifelist.memories,
-                                 locked: lifelist.locked
+                                 locked: lifelist.locked,
+                                 username: lifelist.user
                              };
                          })
                      };
