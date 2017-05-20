@@ -1,10 +1,11 @@
 {{>navbarAuthenticated}}
 
-<h2 class="center">Inspiration</h2>
+<h2 class="center1">Inspiration</h2>
 
 <p class="saved"></p>
 
 <select id="selectList">
+    <option value="Choose list...">Choose list...</option>
     {{#if bucketlists}}
         {{#each bucketlists}}
             <option value="{{title}}" id="{{id}}" data-list="bucketlist">{{title}}</option>
@@ -19,27 +20,27 @@
 <br><br>
 
 <div class="imageContainer">
-    <img src="/images/beluga.jpeg" alt="Beluga whale" class="inspoImage">
+    <img src="/images/roadtrip.jpg" alt="A vintage model of a green Volkswagen van surrounded by palm leaves. Text on picture says road trip through Europe." class="inspoImage">
+    <div class="middle">
+        <div class="textImg" value="Road trip through Europe">Add to list</div>
+    </div>
+</div>
+<div class="imageContainer">
+    <img src="/images/beluga.jpg" alt="A beluga whale looking right into the camera. Text on picture says see beluga whales." class="inspoImage">
     <div class="middle">
         <div class="textImg" value="See beluga whales">Add to list</div>
     </div>
 </div>
 <div class="imageContainer">
-    <img src="/images/beluga.jpeg" alt="Beluga whale" class="inspoImage">
+    <img src="/images/kilimanjaro.jpg" alt="Signs at the Kilimanjaro summit. Text on the picture says climb kilimanjaro." class="inspoImage">
     <div class="middle">
-        <div class="textImg" value="See beluga whales">Add to list</div>
+        <div class="textImg" value="Climb Kilimanjaro">Add to list</div>
     </div>
 </div>
 <div class="imageContainer">
-    <img src="/images/beluga.jpeg" alt="Beluga whale" class="inspoImage">
+    <img src="/images/icecream.jpg" alt="A cone of chocolate ice cream held in a white cone. Text on picture says eat ice cream every day for 365 days." class="inspoImage">
     <div class="middle">
-        <div class="textImg" value="See beluga whales">Add to list</div>
-    </div>
-</div>
-<div class="imageContainer">
-    <img src="/images/beluga.jpeg" alt="Beluga whale" class="inspoImage">
-    <div class="middle">
-        <div class="textImg" value="See beluga whales">Add to list</div>
+        <div class="textImg" value="Eat ice cream every day for 365 days">Add to list</div>
     </div>
 </div>
 

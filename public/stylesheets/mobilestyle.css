@@ -327,6 +327,11 @@ form {
 
 
 /* INSPIRATION SETTINGS */
+select {
+    margin-top: 10px;
+    width: 98.6%;
+}
+
 .imageContainer {
     position: relative;
     width: 100%;
@@ -362,8 +367,9 @@ form {
 
 .textImg {
   background-color: #339798;
+  font-family: 'BeonRegular';
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   padding: 16px 32px;
   cursor: pointer;
 }
