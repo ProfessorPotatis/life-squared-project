@@ -4,18 +4,12 @@
     <h3>Life² chat</h3>
     <br>
     <div class="messages">
-        <script type="text/x-html-template">
+        <template>
             <div class="message">
                 <p class="author"></p>
                 <p class="text"></p>
             </div>
-        </script>
-        <!--<template>
-            <div class="message">
-                <p class="author"></p>
-                <p class="text"></p>
-            </div>
-        </template>-->
+        </template>
     </div>
     <textarea class="messageArea noMove"></textarea>
     <button class="form-button send">Send</button>
@@ -24,16 +18,11 @@
 <div class="chatUsers">
     <h3>Connected users</h3>
     <div class="theUsers">
-        <script type="text/x-html-template">
+        <template>
             <div class="connectedUser">
                 <p class="user"></p>
             </div>
-        </script>
-        <!--<template>
-            <div class="connectedUser">
-                <p class="user"></p>
-            </div>
-        </template>-->
+        </template>
     </div>
 </div>
 </div>
@@ -41,6 +30,13 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
+let edgeBrowser = /Edge/.test(navigator.userAgent) && !window.MSStream;
+let ieBrowser = /MSIE/.test(navigator.userAgent) && !window.MSStream;
+
+if (edgeBrowser || ieBrowser) {
+    alert('The chat is not supported in Microsoft Edge or Internet Explorer. Please use any other browser.');
+}
+
 // Connect to socket.io.
 let socket = io();
 
