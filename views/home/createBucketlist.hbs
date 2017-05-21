@@ -3,8 +3,8 @@
 <form action="/createBucketlist/{{username}}" method="post" id="myForm">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     {{>validationSummary}}
-    <input type="text" name="title" placeholder="Name your bucketlist..." value="{{title}}" required="required"></input>
-    <button class="form-button" type="submit">Create</button>
+    <input type="text" name="title" placeholder="Name your bucketlist..." value="{{title}}" aria-label="An input field where you write down the name you want your list to have." required="required"></input>
+    <button class="form-button" type="submit" aria-label="Button for creating bucketlist.">Create</button>
 </form>
 
 <script>

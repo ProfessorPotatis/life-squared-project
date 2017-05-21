@@ -14,19 +14,19 @@
         <div class="bucketlist">
             <h4 class="inline">{{title}}</h4>
             {{#if locked}}
-                <img class="lockImg" src="/images/padlock-red.png">
+                <img class="lockImg" src="/images/padlock-red.png" alt="A red padlock indicating that the list is locked.">
             {{else}}
-                <img class="lockImg" src="/images/padlock-green.png">
+                <img class="lockImg" src="/images/padlock-green.png" alt="A green padlock indicating that the list in unlocked.">
             {{/if}}<br>
             <b>Created at: </b>{{createdAt}}<br>
             <b>Goals:</b><br>
             {{#if goals}}
                 {{#each goals}}
                     {{#if checked}}
-                        <div class="checkboxDiv"><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
+                        <div class="checkboxDiv"><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" aria-label="A checkbox with the value {{title}}" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
                         <a href="/uploads/{{value.id}}/{{value.username}}?list=Bucketlist" class="form-button upload">+ Upload image and text</a></div>
                     {{else}}
-                        <div class="checkboxDiv"><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
+                        <div class="checkboxDiv"><input type="checkbox" data-list="bucketlist" id="{{value.id}}" name="aGoal" aria-label="A checkbox with the value {{title}}" value="{{title}}" class="checkbox">{{title}}<br>
                         <a href="/uploads/{{value.id}}/{{value.username}}?list=Bucketlist" class="form-button upload">+ Upload image and text</a></div>
                     {{/if}}
                 {{/each}}
@@ -66,19 +66,19 @@
         <div class="lifelist">
             <h4 class="inline">{{title}}</h4>
             {{#if locked}}
-                <img class="lockImg" src="/images/padlock-red.png">
+                <img class="lockImg" src="/images/padlock-red.png" alt="A red padlock indicating that the list is locked.">
             {{else}}
-                <img class="lockImg" src="/images/padlock-green.png">
+                <img class="lockImg" src="/images/padlock-green.png" alt="A green padlock indicating that the list is unlocked.">
             {{/if}}<br>
             <b>Created at: </b>{{createdAt}}<br>
             <b>Goals:</b><br>
             {{#if goals}}
                 {{#each goals}}
                     {{#if checked}}
-                    <div class="checkboxDiv"><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
+                    <div class="checkboxDiv"><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" aria-label="A checkbox with the value {{title}}" value="{{title}}" class="checkbox" checked="{{checked}}">{{title}}<br>
                     <a href="/uploads/{{value.id}}/{{value.username}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
                 {{else}}
-                    <div class="checkboxDiv"><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" value="{{title}}" class="checkbox">{{title}}<br>
+                    <div class="checkboxDiv"><input type="checkbox" data-list="lifelist" id="{{value.id}}" name="aGoal" aria-label="A checkbox with the value {{title}}" value="{{title}}" class="checkbox">{{title}}<br>
                     <a href="/uploads/{{value.id}}/{{value.username}}?list=Lifelist" class="form-button upload">+ Upload image and text</a></div>
                     {{/if}}
                 {{/each}}

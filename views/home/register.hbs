@@ -5,10 +5,9 @@
     <form action="/register" method="post" class="loginForm">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         {{>validationSummary}}
-        <input type="text" class="form-register" name="username" placeholder="Username" value="{{username}}" required="required"></input><br>
-        <input type="password" class="form-register" name="password" placeholder="Password" value="{{password}}" required="required"></input><br>
-        <button class="form-button" type="reset">Reset</button>
-        <button class="form-button" type="submit">Register</button>
+        <input type="text" class="form-register" aria-label="An input fiel for your desired username." name="username" placeholder="Username" value="{{username}}" required="required"></input><br>
+        <input type="password" class="form-register" aria-label="An input field for your desired password." name="password" placeholder="Password" value="{{password}}" required="required"></input><br>
+        <button class="form-button" type="submit" aria-label="Button for registering user.">Register</button>
     </form>
     <br>
     <p>Already have an account?</p>

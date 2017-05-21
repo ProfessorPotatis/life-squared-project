@@ -3,13 +3,13 @@
 <form action="/setDeadline/{{id}}/{{username}}/{{list}}" method="post" id="myForm">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     {{>validationSummary}}
-    <input type="text" pattern="20[1-9][0-9]-((0[1-9])|(1[0-2]))-(([1-2][0-9])|(3[0-1])|(0[1-9]))" name="deadline" placeholder="yyyy-mm-dd" value="{{deadline}}" required="required"></input>
-    <button class="form-button" type="submit">Add</button>
+    <input type="text" pattern="20[1-9][0-9]-((0[1-9])|(1[0-2]))-(([1-2][0-9])|(3[0-1])|(0[1-9]))" name="deadline" aria-label="An input field for the deadline date. Please write year-month-day." placeholder="yyyy-mm-dd" value="{{deadline}}" required="required"></input>
+    <button class="form-button" type="submit" aria-label="Button for adding deadline to list.">Add</button>
 </form>
 <br>
 <div class="info">
     <br>
-    <input type="checkbox" name="lock" value="" data-list="{{list}}" id="{{id}}" class="checkbox">Check to lock your list</input>
+    <input type="checkbox" name="lock" aria-label="A checkbox for locking your list, so no more goals can be added." value="" data-list="{{list}}" id="{{id}}" class="checkbox">Check to lock your list</input>
     <br><br>
     <p><b>NOTE</b><br>When locking your list you may not add any more goals to it.</p>
 </div>

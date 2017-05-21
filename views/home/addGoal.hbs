@@ -3,8 +3,8 @@
 <form action="/addGoal/{{id}}/{{username}}/{{list}}" method="post" id="myForm">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     {{>validationSummary}}
-    <input type="text" name="goal" placeholder="Write your goal..." value="{{goal}}" required="required"></input>
-    <button class="form-button" type="submit">Add</button>
+    <input type="text" name="goal" placeholder="Write your goal..." aria-label="An input field where you write down the goal you want to add to your list." value="{{goal}}" required="required"></input>
+    <button class="form-button" type="submit" aria-label="Button for adding the goal to your list.">Add</button>
 </form>
 
 <script>

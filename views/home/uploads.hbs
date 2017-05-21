@@ -5,12 +5,12 @@
     {{>validationSummary}}
     <br>
     <h4>Image preview</h4>
-    <div class="previewImg"><img id="image"/></div><br>
+    <div class="previewImg"><img alt="Preview of the uploaded image." id="image"/></div><br>
     <input type="hidden" name="imgSrc" id="imgSrc">
     <input type="hidden" name="typeOfFile" id="typeOfFile">
-    <input type="file" name="pic" accept="image/*" id="files"><br><br>
-    <textarea rows="4" cols="30" name="value" placeholder="Write about your experience..." value="{{value}}" required="required"></textarea><br><br>
-    <button class="form-button" type="submit">Add</button>
+    <input type="file" name="pic" aria-label="Choose an image from your device." accept="image/*" id="files"><br><br>
+    <textarea rows="4" cols="30" name="value" aria-label="Text field for writing about your experience." placeholder="Write about your experience..." value="{{value}}" required="required"></textarea><br><br>
+    <button class="form-button" type="submit" aria-label="Button for saving the image and text.">Save</button>
 </form>
 
 <script>
