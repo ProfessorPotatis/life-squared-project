@@ -8,12 +8,20 @@
     <option value="Choose list..." aria-label="Choose a list from the dropdown menu.">Choose list...</option>
     {{#if bucketlists}}
         {{#each bucketlists}}
-            <option value="{{title}}" id="{{id}}" data-list="bucketlist" aria-label="Bucketlist with the name {{title}}">{{title}}</option>
+            {{#if locked}}
+                <option value="{{title}}" id="{{id}}" data-list="bucketlist" aria-label="Bucketlist with the name {{title}}" disabled>{{title}}</option>
+            {{else}}
+                <option value="{{title}}" id="{{id}}" data-list="bucketlist" aria-label="Bucketlist with the name {{title}}">{{title}}</option>
+            {{/if}}
         {{/each}}
     {{/if}}
     {{#if lifelist}}
         {{#each lifelist}}
-            <option value="{{title}}" id="{{id}}" data-list="lifelist" aria-label="Lifelist with the name {{title}}">{{title}}</option>
+            {{#if locked}}
+                <option value="{{title}}" id="{{id}}" data-list="lifelist" aria-label="Lifelist with the name {{title}}" disabled>{{title}}</option>
+            {{else}}
+                <option value="{{title}}" id="{{id}}" data-list="lifelist" aria-label="Lifelist with the name {{title}}">{{title}}</option>
+            {{/if}}
         {{/each}}
     {{/if}}
 </select>

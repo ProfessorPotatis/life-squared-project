@@ -34,14 +34,13 @@
                 <i>No goals added yet.</i><br>
             {{/if}}
             {{#if memories}}
+                <br>
                 {{#each memories}}
                     {{#if image}}
-                    <br>
-                        <img src="{{{image}}}" class="listImg"/>
+                        <img src="{{{image}}}" class="listImg inline"/>
                     {{/if}}
                     {{#if text}}
-                    <br>
-                        <p>{{text}}</p>
+                        <!--<p class="inline">{{text}}</p>-->
                     {{/if}}
                 {{/each}}
             {{else}}
@@ -86,14 +85,13 @@
                 <i>No goals added yet.</i><br>
             {{/if}}
             {{#if memories}}
+                <br>
                 {{#each memories}}
                     {{#if image}}
-                    <br>
-                        <img src="{{{image}}}" class="listImg"/>
+                        <img src="{{{image}}}" class="listImg inline"/>
                     {{/if}}
                     {{#if text}}
-                    <br>
-                        <p>{{text}}</p>
+                        <!--<p class="inline">{{text}}</p>-->
                     {{/if}}
                 {{/each}}
             {{else}}
