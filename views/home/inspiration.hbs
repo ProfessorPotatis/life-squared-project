@@ -2,7 +2,7 @@
 
 <h2 class="center1">Inspiration</h2>
 
-<p class="saved"></p>
+<p class="saved greenFlash"></p>
 
 <select id="selectList">
     <option value="Choose list..." aria-label="Choose a list from the dropdown menu.">Choose list...</option>
@@ -81,13 +81,11 @@
 
     socket.on('success', function() {
         saved.textContent = '';
-        document.getElementsByClassName('saved')[0].classList.add = 'greenFlash';
         saved.textContent = 'The goal was saved successfully.';
     });
 
     socket.on('unsuccessful', function() {
         saved.textContent = '';
-        document.getElementsByClassName('saved')[0].classList.add = 'redFlash';
         saved.textContent = 'Could not save the goal to the selected list.';
     });
 </script>
