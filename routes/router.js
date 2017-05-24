@@ -44,10 +44,7 @@ let isAuthenticated = function(req, res, next) {
 
     // If not authenticated trigger a 403 error.
     if (!sess.username) {
-        return res.render('home/index', {
-            validationErrors: ['403 Forbidden. You have to be logged in to do that.']
-        });
-        //return res.status(403).render('error/403');
+        return res.status(403).redirect('/403');
     }
     next();
 };
@@ -363,6 +360,45 @@ router.route('/uploads/:id/:username/:list').post(isAuthenticated, csrfProtectio
 
 router.route('/inspiration/:username').get(isAuthenticated, function(req, res) {
     res.render('home/inspiration', ({bucketlists: bucket[0], lifelist: life, username: req.params.username}));
+});
+
+router.route('/403').get(csrfProtection, function(req, res) {
+    res.render('home/index', ({
+        validationErrors: ['403 Forbidden. You have to be logged in to do that.'],
+        csrfToken: req.csrfToken()}
+    ));
+});
+
+router.route('/404').get(csrfProtection, function(req, res) {
+    if (sess.username) {
+        res.render('home/userPage', ({
+            bucketlists: bucket[0],
+            lifelist: life,
+            username: sess.username,
+            validationErrors: ['404 Not Found. We could not find what you were looking for.']
+        }));
+    } else {
+        res.render('home/index', ({
+            validationErrors: ['404 Not Found. We could not find what you were looking for.'],
+            csrfToken: req.csrfToken()}
+        ));
+    }
+});
+
+router.route('/500').get(csrfProtection, function(req, res) {
+    if (sess.username) {
+        res.render('home/userPage', ({
+            bucketlists: bucket[0],
+            lifelist: life,
+            username: sess.username,
+            validationErrors: ['500 Internal Error. Something went wrong on our end.']
+        }));
+    } else {
+        res.render('home/index', ({
+            validationErrors: ['500 Internal Error. Something went wrong on our end.'],
+            csrfToken: req.csrfToken()}
+        ));
+    }
 });
 
 

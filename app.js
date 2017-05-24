@@ -73,7 +73,7 @@
 
  // Errors 404, 403 and 500
  app.use(function(req, res) {
-     res.status(404).render('error/404');
+     res.status(404).redirect('/404');
  });
 
  app.use(function(err, req, res, next) {
@@ -81,12 +81,12 @@
         return next(err);
     }
     console.error(err.stack);
-    res.status(403).render('error/403');
+    res.status(403).redirect('/403');
  });
 
  app.use(function(err, req, res) {
     console.error(err.stack);
-    res.status(500).render('error/500');
+    res.status(500).redirect('/500');
  });
 
  // Start listening on assigned port
