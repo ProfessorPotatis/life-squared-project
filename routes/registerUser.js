@@ -31,19 +31,22 @@
                      return res.render('home/register', {
                          validationErrors: [err.errors.username.message],
                          password: req.body.password,
-                         username: req.body.username
+                         username: req.body.username,
+                         csrfToken: req.csrfToken()
                      });
              } else if (err.errors.password !== undefined && err.errors.password.name === 'ValidatorError') {
                  return res.render('home/register', {
                      validationErrors: [err.errors.password.message],
                      password: req.body.password,
-                     username: req.body.username
+                     username: req.body.username,
+                     csrfToken: req.csrfToken()
                  });
              } else if (err.errors.password.name === 'ValidatorError' && err.errors.username.name === 'ValidatorError') {
                  return res.render('home/register', {
                      validationErrors: [err.errors.username.message, err.errors.password.message],
                      password: req.body.password,
-                     username: req.body.username
+                     username: req.body.username,
+                     csrfToken: req.csrfToken()
                  });
              }
 

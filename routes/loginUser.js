@@ -26,7 +26,8 @@
                  } else {
                      return res.render('home/index', {
                          validationErrors: ['Wrong password or username. Try again.'],
-                         username: req.body.username
+                         username: req.body.username,
+                         csrfToken: req.csrfToken()
                      });
                  }
              };
@@ -37,7 +38,8 @@
          .catch(function(err) {
              if (TypeError) {
                  return res.render('home/index', {
-                     validationErrors: ['That user does not exist. Please register.']
+                     validationErrors: ['That user does not exist. Please register.'],
+                     csrfToken: req.csrfToken()
                  });
              }
              next(err);
