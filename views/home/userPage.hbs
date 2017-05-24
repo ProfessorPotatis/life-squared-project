@@ -14,9 +14,9 @@
         <div class="bucketlist">
             <h4 class="inline">{{title}}</h4>
             {{#if locked}}
-                <img class="lockImg" src="/images/padlock-red.png" alt="A red padlock indicating that the list is locked.">
+                <img class="lockImg" src="/images/padlock-red.png" alt="A red padlock indicating that the list is locked." id="{{id}}" data-list="bucketlist">
             {{else}}
-                <img class="lockImg" src="/images/padlock-green.png" alt="A green padlock indicating that the list in unlocked.">
+                <img class="lockImg" src="/images/padlock-green.png" alt="A green padlock indicating that the list in unlocked." id="{{id}}" data-list="bucketlist">
             {{/if}}<br>
             <b>Created at: </b>{{createdAt}}<br>
             <b>Goals:</b><br>
@@ -47,7 +47,7 @@
                 <br><i>There are no memories saved yet.</i><br>
             {{/if}}
             {{#if locked}}
-                <br><i>This list is locked.</i><br>
+                <div class="addGoal" hidden="true"><a href="/addGoal/{{id}}/{{username}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
             {{else}}
                 <div class="addGoal"><a href="/addGoal/{{id}}/{{username}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
             {{/if}}
@@ -65,9 +65,9 @@
         <div class="lifelist">
             <h4 class="inline">{{title}}</h4>
             {{#if locked}}
-                <img class="lockImg" src="/images/padlock-red.png" alt="A red padlock indicating that the list is locked.">
+                <img class="lockImg" src="/images/padlock-red.png" alt="A red padlock indicating that the list is locked." id="{{id}}" data-list="lifelist">
             {{else}}
-                <img class="lockImg" src="/images/padlock-green.png" alt="A green padlock indicating that the list is unlocked.">
+                <img class="lockImg" src="/images/padlock-green.png" alt="A green padlock indicating that the list is unlocked." id="{{id}}" data-list="lifelist">
             {{/if}}<br>
             <b>Created at: </b>{{createdAt}}<br>
             <b>Goals:</b><br>
@@ -98,7 +98,7 @@
                 <br><i>There are no memories saved yet.</i><br>
             {{/if}}
             {{#if locked}}
-                <br><i>This list is locked.</i><br>
+                <div class="addGoal" hidden="true"><a href="/addGoal/{{id}}/{{username}}?list=Lifelist" class="form-button">+ Add goal</a></div>
             {{else}}
                 <div class="addGoal"><a href="/addGoal/{{id}}/{{username}}?list=Lifelist" class="form-button">+ Add goal</a></div>
             {{/if}}
@@ -117,6 +117,29 @@
 function ready() {
     // Connect to socket.io.
     let socket = io();
+
+    let lockImg = document.getElementsByClassName('lockImg');
+
+    for (let i = 0; i < lockImg.length; i += 1) {
+        lockImg[i].addEventListener('click', function(event) {
+            lockList(event.target);
+        });
+    }
+
+    function lockList(clickedImg) {
+        let src = document.getElementById(clickedImg.id).src;
+        let addGoalButton = document.getElementById(clickedImg.id).parentNode.getElementsByClassName('addGoal')[0];
+
+        if (src.indexOf('padlock-green.png') != -1) {
+            addGoalButton.setAttribute('hidden', true);
+            document.getElementById(clickedImg.id).src = '/images/padlock-red.png';
+        } else {
+            addGoalButton.removeAttribute('hidden');
+            document.getElementById(clickedImg.id).src = '/images/padlock-green.png';
+        }
+
+        socket.emit('lockList', {id: clickedImg.id, list: clickedImg.getAttribute('data-list')});
+    }
 
     let checkboxes = document.getElementsByClassName('checkbox');
     let percentPerBox = 100 / checkboxes.length;

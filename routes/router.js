@@ -44,7 +44,10 @@ let isAuthenticated = function(req, res, next) {
 
     // If not authenticated trigger a 403 error.
     if (!sess.username) {
-        return res.status(403).render('error/403');
+        return res.render('home/index', {
+            validationErrors: ['403 Forbidden. You have to be logged in to do that.']
+        });
+        //return res.status(403).render('error/403');
     }
     next();
 };
@@ -136,7 +139,7 @@ router.route('/').get(csrfProtection, function(req, res, next) {
             });
 
             socket.on('lockList', function(box) {
-                if (box.list === 'Bucketlist') {
+                if (box.list === 'bucketlist') {
                     Bucketlist.findById(box.id).exec()
                        .then(function(data) {
                            if (data.locked === false) {
@@ -146,7 +149,7 @@ router.route('/').get(csrfProtection, function(req, res, next) {
                            }
                            data.save();
                        });
-                } else if (box.list === 'Lifelist') {
+                } else if (box.list === 'lifelist') {
                     Lifelist.findById(box.id).exec()
                        .then(function(data) {
                            if (data.locked === false) {

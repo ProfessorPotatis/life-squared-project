@@ -28,6 +28,10 @@ a {
     color: #339798;
 }
 
+input {
+    height: 20px;
+}
+
 .center1 {
     text-align: center;
 }
@@ -128,7 +132,8 @@ form {
     font-family: 'BeonRegular';
     margin-top: 5px;
     cursor: pointer;
-    height: 20px;
+    height: 30px;
+    width: 50px;
     border-radius: 5px;
     background-color: #339798;
     color: #dcffff;
@@ -230,7 +235,7 @@ form {
 
 .chat {
     text-align: left;
-    height: 370px;
+    height: 380px;
     width: 250px;
     padding: 10px 10px;
     padding-top: 10px;

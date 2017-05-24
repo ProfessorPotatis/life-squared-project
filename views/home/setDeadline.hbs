@@ -6,13 +6,6 @@
     <input type="text" pattern="20[1-9][0-9]-((0[1-9])|(1[0-2]))-(([1-2][0-9])|(3[0-1])|(0[1-9]))" name="deadline" aria-label="An input field for the deadline date. Please write year-month-day." placeholder="yyyy-mm-dd" value="{{deadline}}" required="required"></input>
     <button class="form-button" type="submit" aria-label="Button for adding deadline to list.">Add</button>
 </form>
-<br>
-<div class="info">
-    <br>
-    <input type="checkbox" name="lock" aria-label="A checkbox for locking your list, so no more goals can be added." value="" data-list="{{list}}" id="{{id}}" class="checkbox">Check to lock your list</input>
-    <br><br>
-    <p><b>NOTE</b><br>When locking your list you may not add any more goals to it.</p>
-</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -28,28 +21,5 @@
                  alert('Error! You must fill all required fields.');
         }
         }, false);
-    }
-
-
-    // Connect to socket.io.
-    let socket = io();
-
-    let url = window.location.pathname;
-    let urlArray = url.split('/');
-    let path = urlArray[urlArray.length - 2];
-
-    console.log(path);
-
-    if (path === 'setDeadline') {
-        let checkbox = document.getElementsByClassName('checkbox')[0];
-        console.log(checkbox);
-
-        checkbox.addEventListener('click', lockList);
-
-        function lockList() {
-            console.log(checkbox.id);
-            console.log(checkbox.getAttribute('data-list'));
-            socket.emit('lockList', {id: checkbox.id, list: checkbox.getAttribute('data-list')});
-        }
     }
 </script>
