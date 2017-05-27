@@ -10,17 +10,19 @@
  let Bucketlist = require('../models/Bucketlist');
  let Lifelist = require('../models/Lifelist');
 
+ // Array of connected chat users
  let userArray = [];
 
+ /* Socket.io */
  function theSocket(req, myEmitter, next) {
      let io = require('socket.io')(req.socket.server);
 
      // When client connects to socket.io.
      io.on('connection', function(socket) {
-         //connected = true;
          console.log('Connected to socket.');
 
-         // Receive data from the client
+         /* Receive data from the client */
+         // When checkbox is checked -> set lists checked value to true
          socket.on('checked', function(box) {
              if (box.list === 'bucketlist') {
                  Bucketlist.findById(box.id).exec()
@@ -49,6 +51,7 @@
              }
          });
 
+         // When checkbox is unchecked -> set lists checked value to false
          socket.on('unchecked', function(box) {
              if (box.list === 'bucketlist') {
                  Bucketlist.findById(box.id).exec()
@@ -77,22 +80,7 @@
              }
          });
 
-         socket.on('chat message', function(msg) {
-             io.emit('print message', {msg: msg.message, user: msg.user, users: userArray});
-         });
-
-         myEmitter.on('new user', function(data) {
-             if (!userArray.includes(data.message)) {
-                 userArray.push(data.message);
-             }
-             // Send data to client
-             socket.emit('new user', data.message);
-         });
-
-         socket.on('system message', function(data) {
-             socket.emit('print message', {msg: data.message, user: data.user, users: userArray});
-         });
-
+         // When padlock is clicked -> set lists locked value to true or false
          socket.on('lockList', function(box) {
              if (box.list === 'bucketlist') {
                  Bucketlist.findById(box.id).exec()
@@ -117,6 +105,7 @@
              }
          });
 
+         // When new goal is added to list -> save goal to list
          socket.on('addGoal', function(box) {
              if (box.list === 'bucketlist') {
                  Bucketlist.findOneAndUpdate(
@@ -147,6 +136,26 @@
                      }
                  );
              }
+         });
+
+         // When chat message is sent by client -> print out message in chat
+         socket.on('chat message', function(msg) {
+             io.emit('print message', {msg: msg.message, user: msg.user, users: userArray});
+         });
+
+         // When new user connects to chat -> print out system message
+         // in chat and add to list of connected users
+         myEmitter.on('new user', function(data) {
+             if (!userArray.includes(data.message)) {
+                 userArray.push(data.message);
+             }
+             // Send data to client
+             socket.emit('new user', data.message);
+         });
+
+         // When system message is received -> print out message in chat
+         socket.on('system message', function(data) {
+             socket.emit('print message', {msg: data.message, user: data.user, users: userArray});
          });
 
          // The connection was closed

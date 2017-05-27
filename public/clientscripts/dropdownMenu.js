@@ -10,6 +10,7 @@ function dropdownMenu() {
     document.getElementById('theMenu').classList.toggle('show');
 }
 
+// Polyfill for Element.matches and Element.matchesSelector
 window.onclick = function(event) {
     if (!Element.prototype.matches) {
         Element.prototype.matches =
@@ -26,6 +27,7 @@ window.onclick = function(event) {
             };
     }
 
+    // Close dropdown menu when user clicks outside of the menu
     if (!event.target.matches('.navMobile')) {
         let dropdowns = document.getElementsByClassName('navList');
 

@@ -11,6 +11,7 @@
  let Bucketlist = require('../models/Bucketlist');
  let Lifelist = require('../models/Lifelist');
 
+ /* Remove all users from database */
  function removeUser() {
      RegisterUser.remove({}, function(err) {
          if (err) {
@@ -20,6 +21,7 @@
      });
  }
 
+ /* Remove all bucketlists from database */
  function removeBucketlist() {
      Bucketlist.remove({}, function(err) {
          if (err) {
@@ -29,6 +31,7 @@
      });
  }
 
+ /* Remove all lifelists from database */
  function removeLifelist() {
      Lifelist.remove({}, function(err) {
          if (err) {

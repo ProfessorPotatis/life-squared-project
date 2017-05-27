@@ -5,6 +5,7 @@
  * @version 1.0.0
  */
 
+// Write error message if browser is Edge or IE, not supported!
 let edgeBrowser = /Edge/.test(navigator.userAgent) && !window.MSStream;
 let ieBrowser = /MSIE/.test(navigator.userAgent) && !window.MSStream;
 
@@ -27,12 +28,14 @@ if (path === 'chat') {
     let user = urlArray[urlArray.length - 1];
     let sendBtn = document.getElementsByClassName('send')[0];
 
+    // Send message when 'Send' button is clicked
     sendBtn.addEventListener('click', function(event) {
         sendMessage(event.target.previousElementSibling.value, user);
         event.target.previousElementSibling.value = '';
         event.preventDefault();
     });
 
+    // Send message when 'Enter' key is pressed
     chatDiv.addEventListener('keypress', function(event) {
         // Listen for Enter key
         if (event.keyCode === 13) {
@@ -44,14 +47,18 @@ if (path === 'chat') {
     });
 
     function sendMessage(message, user) {
+        // Emit message to server
         socket.emit('chat message', {message: message, user: user});
     }
 
+    // Receive data about new user from server
     socket.on('new user', function(user) {
         let message = 'System message: A user connected to chat.';
+        // Emit message about new user to server
         socket.emit('system message', {message: message, user: user});
     });
 
+    // Receive message to print out in chat
     socket.on('print message', function(theMsg) {
         let template = document.querySelectorAll('template')[0];
         let messageDiv = document.importNode(template.content.firstElementChild, true);
@@ -62,11 +69,13 @@ if (path === 'chat') {
         let messages = document.getElementsByClassName('messages')[0];
         messages.appendChild(messageDiv);
 
+        // Add user to list of connected users
         if (theMsg.users) {
             addUserToList(theMsg.users);
         }
     });
 
+    // Add user to list of connected users
     function addUserToList(users) {
         let theUsers = document.getElementsByClassName('theUsers')[0];
 

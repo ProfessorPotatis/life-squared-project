@@ -5,6 +5,7 @@
  * @version 1.0.0
  */
 
+// Form validation for earlier, not updated versions of iOS mobile devices
 let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 let browserVersion = /10_3/.test(navigator.userAgent) && !window.MSStream;
 

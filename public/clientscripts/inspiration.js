@@ -13,6 +13,8 @@
  let selectedList;
  let typeOfList;
  let saved = document.getElementsByClassName('saved')[0];
+
+ // Add support for touch event on mobile
  let touchEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
 
  selectList.addEventListener('change', function(event) {
@@ -26,6 +28,7 @@
      });
  }
 
+ // When user clicks on 'Add to list' -> add clicked element to selected list
  function addToList(target) {
      let goal = target.getAttribute('value');
      socket.emit('addGoal', {list: typeOfList, id: selectedList, goal: goal});

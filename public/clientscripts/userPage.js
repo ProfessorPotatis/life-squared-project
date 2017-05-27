@@ -5,6 +5,9 @@
  * @version 1.0.0
  */
 
+// When page is loaded -> connect to socket,
+// add event listeners to padlocks and checkboxes,
+// and calculate users progress
 function ready() {
     // Connect to socket.io.
     let socket = io();
@@ -17,6 +20,7 @@ function ready() {
         });
     }
 
+    // Toggle padlock image and save locked value to database
     function lockList(clickedImg) {
         let src = document.getElementById(clickedImg.id).src;
         let addGoalButton = document.getElementById(clickedImg.id).parentNode.getElementsByClassName('addGoal')[0];
@@ -44,6 +48,7 @@ function ready() {
         }
     }
 
+    // Update progress bar and notify server about checked and unchecked checkboxes
     function showProgress() {
         let progressBar = document.getElementById('myBar');
         let count = 0;

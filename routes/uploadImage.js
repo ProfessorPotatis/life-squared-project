@@ -14,8 +14,8 @@
  function uploadImage(req, res, next) {
      let list = req.params.list;
 
-     console.log(req.body.typeOfFile.includes('image/'));
-
+     // If file is image -> proceed and save image to specified list
+     // Else write out error message
      if (req.body.typeOfFile.includes('image/')) {
          if (list === 'Bucketlist') {
              Bucketlist.findOneAndUpdate(
