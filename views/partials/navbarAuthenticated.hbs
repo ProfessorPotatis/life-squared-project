@@ -1,5 +1,5 @@
 <div class="navigation" id="navigation">
-    <div class="navMobile" onclick="dropdownMenu()"></div>
+    <div class="navMobile"></div>
     <ul class="navList" id="theMenu">
         <li><a href="/user">My page</a></li>
         <li><a href="/createBucketlist/{{username}}">Create bucketlist</a></li>
@@ -11,36 +11,4 @@
     </ul>
 </div>
 
-<script>
-function dropdownMenu() {
-    document.getElementById('theMenu').classList.toggle('show');
-}
-
-window.onclick = function(event) {
-    if (!Element.prototype.matches) {
-        Element.prototype.matches =
-            Element.prototype.matchesSelector ||
-            Element.prototype.mozMatchesSelector ||
-            Element.prototype.msMatchesSelector ||
-            Element.prototype.oMatchesSelector ||
-            Element.prototype.webkitMatchesSelector ||
-            function(s) {
-                var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-                    i = matches.length;
-                while (--i >= 0 && matches.item(i) !== this) {}
-                return i > -1;
-            };
-    }
-
-    if (!event.target.matches('.navMobile')) {
-        let dropdowns = document.getElementsByClassName('navList');
-
-        for (let i = 0; i < dropdowns.length; i++) {
-            let openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-</script>
+<script type="text/javascript" src="/clientscripts/dropdownMenu.js"></script>

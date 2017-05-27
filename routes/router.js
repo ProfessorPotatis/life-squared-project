@@ -10,7 +10,6 @@
 // Modules
 const router = require('express').Router();
 let Lifelist = require('../models/Lifelist');
-let Bucketlist = require('../models/Bucketlist');
 let theSocket = require('./theSocket');
 let register = require('./registerUser');
 let login = require('./loginUser');

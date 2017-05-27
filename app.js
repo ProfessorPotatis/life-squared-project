@@ -43,14 +43,16 @@
  }));
 
  // Only allow style and script from same origin
- /*app.use(helmet.contentSecurityPolicy({
+ app.use(helmet.contentSecurityPolicy({
      directives: {
          defaultSrc: ["'self'"],
          styleSrc: ["'self' https://fonts.googleapis.com https://fontlibrary.org"],
          fontSrc: ["'self' https://fonts.gstatic.com data: https://fontlibrary.org data:"],
-         scriptSrc: ["'self'"]
+         scriptSrc: ["'self'"],
+         imgSrc: ["'self' data:"],
+         connectSrc: ["'self'", 'wss:', 'ws:']
      }
- }));*/
+ }));
 
  // Create a session middleware
  app.use(session({
@@ -94,4 +96,5 @@
      console.log('Application listening on port ' + port + '.');
  });
 
+ // Exports
  module.exports = app;
