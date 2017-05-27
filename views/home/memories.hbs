@@ -1,0 +1,60 @@
+{{>navbarAuthenticated}}
+
+{{>validationSummary}}
+
+<h2 class="center1">{{username}}s Life<sup>2</sup> memories</h2>
+<br>
+
+{{#if bucketlists }}
+    <div class="memories center1">
+        <p class="center1">Click on a memory to read about it.</p><br>
+    {{#each bucketlists}}
+            {{#if memories}}
+                {{#each memories}}
+                    {{#if image}}
+                        <img src="{{{image}}}" class="listImg inline"/>
+                    {{/if}}
+                    {{#if text}}
+                        <p hidden>{{text}}</p>
+                    {{/if}}
+                {{/each}}
+            {{/if}}
+    {{/each}}
+{{/if}}
+{{#if lifelist }}
+    {{#each lifelist}}
+        {{#if memories}}
+            {{#each memories}}
+                {{#if image}}
+                    <img src="{{{image}}}" class="listImg inline"/>
+                {{/if}}
+                {{#if text}}
+                    <p hidden>{{text}}</p>
+                {{/if}}
+            {{/each}}
+        {{/if}}
+    {{/each}}
+    </div>
+{{/if}}
+<br>
+
+<div class="enhancedMemory">
+    <img id="memoImage" class="inline"/>
+    <p id="story" class="inline"></p>
+</div><br>
+
+<script>
+    let images = document.getElementsByClassName('listImg');
+    let touchEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
+
+    for (let i = 0; i < images.length; i += 1) {
+        images[i].addEventListener(touchEvent, function(event) {
+            enhance(event.target);
+        });
+    }
+
+    function enhance(image) {
+        document.getElementById('memoImage').src = image.src;
+        document.getElementById('story').textContent = 'My experience:\r\n' + image.nextElementSibling.textContent;
+    }
+</script>

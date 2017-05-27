@@ -33,19 +33,6 @@
             {{else}}
                 <i>No goals added yet.</i><br>
             {{/if}}
-            {{#if memories}}
-                <br>
-                {{#each memories}}
-                    {{#if image}}
-                        <img src="{{{image}}}" class="listImg inline"/>
-                    {{/if}}
-                    {{#if text}}
-                        <!--<p class="inline">{{text}}</p>-->
-                    {{/if}}
-                {{/each}}
-            {{else}}
-                <br><i>There are no memories saved yet.</i><br>
-            {{/if}}
             {{#if locked}}
                 <div class="addGoal" hidden="true"><a href="/addGoal/{{id}}/{{username}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
             {{else}}
@@ -83,19 +70,6 @@
                 {{/each}}
             {{else}}
                 <i>No goals added yet.</i><br>
-            {{/if}}
-            {{#if memories}}
-                <br>
-                {{#each memories}}
-                    {{#if image}}
-                        <img src="{{{image}}}" class="listImg inline"/>
-                    {{/if}}
-                    {{#if text}}
-                        <!--<p class="inline">{{text}}</p>-->
-                    {{/if}}
-                {{/each}}
-            {{else}}
-                <br><i>There are no memories saved yet.</i><br>
             {{/if}}
             {{#if locked}}
                 <div class="addGoal" hidden="true"><a href="/addGoal/{{id}}/{{username}}?list=Lifelist" class="form-button">+ Add goal</a></div>

@@ -362,6 +362,10 @@ router.route('/inspiration/:username').get(isAuthenticated, function(req, res) {
     res.render('home/inspiration', ({bucketlists: bucket[0], lifelist: life, username: req.params.username}));
 });
 
+router.route('/memories/:username').get(isAuthenticated, function(req, res) {
+    res.render('home/memories', ({bucketlists: bucket[0], lifelist: life, username: req.params.username}));
+});
+
 router.route('/403').get(csrfProtection, function(req, res) {
     res.render('home/index', ({
         validationErrors: ['403 Forbidden. You have to be logged in to do that.'],
