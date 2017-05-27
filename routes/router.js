@@ -18,7 +18,7 @@ let createList = require('./createList');
 let addGoal = require('./addGoal');
 let setDeadline = require('./setDeadline');
 let uploadImage = require('./uploadImage');
-let emptyDatabase = require('./emptyDatabase');
+//let emptyDatabase = require('./emptyDatabase');
 let csrf = require('csurf');
 
 // Protection against CSRF attacks
@@ -50,9 +50,9 @@ let isAuthenticated = function(req, res, next) {
 
 
 router.route('/').get(csrfProtection, function(req, res, next) {
-    emptyDatabase.removeUser();
+    /*emptyDatabase.removeUser();
     emptyDatabase.removeBucketlist();
-    emptyDatabase.removeLifelist();
+    emptyDatabase.removeLifelist();*/
 
     // If not connected to socket -> connect.
     if (!connected) {
