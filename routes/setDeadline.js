@@ -47,6 +47,41 @@
      }
  }
 
+ function checkSet(req, res, bucket, life) {
+     if (req.query.list === 'Bucketlist') {
+         Bucketlist.findOne({_id: req.params.id}).exec()
+             .then(function(data) {
+                 if (data.deadline) {
+                     // Render userpage and show a message.
+                     res.render('home/userPage', ({
+                         validationErrors: ['You have already set a deadline.'],
+                         username: data.user,
+                         bucketlists: bucket[0],
+                         lifelist: life
+                     }));
+                 } else {
+                     res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
+                 }
+             });
+     } else if (req.query.list === 'Lifelist') {
+         Lifelist.findOne({_id: req.params.id}).exec()
+             .then(function(data) {
+                 if (data.deadline) {
+                     // Render userpage and show a message.
+                     res.render('home/userPage', ({
+                         validationErrors: ['You have already set a deadline.'],
+                         username: data.user,
+                         bucketlists: bucket[0],
+                         lifelist: life
+                     }));
+                 } else {
+                     res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
+                 }
+             });
+     }
+ }
+
 module.exports = {
-    setDeadline: setDeadline
+    setDeadline: setDeadline,
+    checkSet: checkSet
 };

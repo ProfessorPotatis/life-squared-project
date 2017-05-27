@@ -7,6 +7,7 @@
 
 'use strict';
 
+// Modules
 const router = require('express').Router();
 let Lifelist = require('../models/Lifelist');
 let Bucketlist = require('../models/Bucketlist');
@@ -19,22 +20,24 @@ let addGoal = require('./addGoal');
 let setDeadline = require('./setDeadline');
 let uploadImage = require('./uploadImage');
 //let emptyDatabase = require('./emptyDatabase');
-let csrf = require('csurf');
 
 // Protection against CSRF attacks
+let csrf = require('csurf');
 let csrfProtection = csrf();
 
 // Session variable
 let sess;
 
+// List variables
 let bucket, life;
 
+// My event emitter
 let events = require('events');
 class MyEmitter extends events {}
 const myEmitter = new MyEmitter();
 myEmitter.setMaxListeners(0);
 
-// Global variable
+// Socket connection variable to avoid multiple connections for one user
 let connected = false;
 
 // Middleware for authentication
@@ -48,7 +51,7 @@ let isAuthenticated = function(req, res, next) {
     next();
 };
 
-
+/* If authenticated show user page, else show login page and include csrfToken */
 router.route('/').get(csrfProtection, function(req, res, next) {
     /*emptyDatabase.removeUser();
     emptyDatabase.removeBucketlist();
@@ -90,10 +93,11 @@ router.route('/login').post(csrfProtection, function(req, res, next) {
     login.loginUser(req, res, sess, next);
 });
 
-/* If authenticated, show admin page and fetch users lists. */
+/* If authenticated, show user page and fetch users lists. */
 router.route('/user').get(isAuthenticated, function(req, res) {
     sess = req.session;
 
+    // Fetch lists and render user page
     Promise.all([fetchList.bucketlist(req, res, sess)]).then(function(theBucketlists) {
         return Promise.resolve(theBucketlists);
     }).then(function(theBLists) {
@@ -165,39 +169,9 @@ router.route('/addGoal/:id/:username/:list').post(isAuthenticated, csrfProtectio
     addGoal.addGoal(req, res, next);
 });
 
-/* If authenticated, show create page for deadline. Use csrfToken. */
+/* If authenticated and deadline not already set -> show create page for deadline. Use csrfToken. */
 router.route('/setDeadline/:id/:username').get(isAuthenticated, csrfProtection, function(req, res) {
-    if (req.query.list === 'Bucketlist') {
-        Bucketlist.findOne({_id: req.params.id}).exec()
-            .then(function(data) {
-                if (data.deadline) {
-                    // Render userpage and show a message.
-                    res.render('home/userPage', ({
-                        validationErrors: ['You have already set a deadline.'],
-                        username: data.user,
-                        bucketlists: bucket[0],
-                        lifelist: life
-                    }));
-                } else {
-                    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
-                }
-            });
-    } else if (req.query.list === 'Lifelist') {
-        Lifelist.findOne({_id: req.params.id}).exec()
-            .then(function(data) {
-                if (data.deadline) {
-                    // Render userpage and show a message.
-                    res.render('home/userPage', ({
-                        validationErrors: ['You have already set a deadline.'],
-                        username: data.user,
-                        bucketlists: bucket[0],
-                        lifelist: life
-                    }));
-                } else {
-                    res.render('home/setDeadline', ({deadline: undefined, id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
-                }
-            });
-    }
+    setDeadline.checkSet(req, res, bucket, life);
 });
 
 /* If authenticated and the csrfToken is valid, post deadline to specified list. */
@@ -211,6 +185,7 @@ router.route('/chat/:username').get(isAuthenticated, function(req, res) {
     myEmitter.emit('new user', {message: req.params.username});
 });
 
+/* If authenticated, render uploading page. */
 router.route('/uploads/:id/:username').get(isAuthenticated, csrfProtection, function(req, res) {
     res.render('home/uploads', ({id: req.params.id, username: req.params.username, list: req.query.list, csrfToken: req.csrfToken()}));
 });
@@ -230,6 +205,7 @@ router.route('/memories/:username').get(isAuthenticated, function(req, res) {
     res.render('home/memories', ({bucketlists: bucket[0], lifelist: life, username: req.params.username}));
 });
 
+/* ERROR HANDLING */
 router.route('/403').get(csrfProtection, function(req, res) {
     res.render('home/index', ({
         validationErrors: ['403 Forbidden. You have to be logged in to do that.'],
