@@ -54,7 +54,7 @@ input {
 /* NAVIGATION SETTINGS */
 .navigation {
     position: absolute;
-    top: 0;
+    top: 5;
     left: 5;
     display: inline-block;
 }
