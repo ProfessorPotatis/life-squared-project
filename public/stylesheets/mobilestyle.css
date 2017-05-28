@@ -56,13 +56,13 @@ input {
     position: absolute;
     top: 0;
     left: 5;
-    margin-top: 40px;
     display: inline-block;
 }
 
 .navMobile {
     cursor: pointer;
     background: #339798 url('../images/menu-icon.png') no-repeat center center;
+    margin-top: 40px;
     height: 40px;
     width: 40px;
     border-radius: 5px;
@@ -230,7 +230,7 @@ form {
 
 .chat {
     text-align: left;
-    height: 380px;
+    height: 390px;
     width: 250px;
     padding: 10px 10px;
     padding-top: 10px;
