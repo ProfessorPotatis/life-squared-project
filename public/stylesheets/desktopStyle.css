@@ -1,0 +1,75 @@
+html {
+    background-size: cover;
+}
+
+/* NAVIGATION SETTINGS */
+.navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.navList {
+    font-family: 'BeonRegular';
+    list-style: none;
+    background-color: #339798;
+    padding: 10px;
+}
+.navList li {
+    display: inline;
+}
+.navList li a {
+    padding: 10px;
+    font-size: 18px;
+    color: #dcffff;
+}
+.navList li a:hover {
+    background-color: #2d7f7e;
+}
+
+.form-button {
+    height: 20px;
+}
+
+/* BUCKETLIST SETTINGS */
+.bucketlists {
+    float: left;
+    width: 48%;
+}
+
+/* LIFELIST SETTINGS */
+.lifelist {
+    float: right;
+    width: 48%;
+}
+
+/* CHAT SETTINGS */
+.center {
+    margin: auto;
+    width: 550px;
+}
+
+.chat {
+    float: left;
+    height: 370px;
+}
+
+.chatUsers {
+    float: right;
+}
+
+/* INSPIRATION SETTINGS */
+.imageContainer {
+    width: 49%;
+}
+
+/* MEMORIES SETTINGS */
+#memoImage {
+    padding: 5px;
+}
+
+#story {
+    padding: 5px;
+    width: 48%;
+}

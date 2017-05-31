@@ -1,11 +1,4 @@
-/* Remove default settings to all elements */
-* {
-    margin: 0;
-    padding: 0;
-}
-
 html {
-    background: url('../images/brickwall.jpg') no-repeat center center fixed;
     background-size: auto auto;
     height: 100%;
     overflow: hidden;
@@ -15,40 +8,10 @@ html {
 body {
     height: 100%;
     overflow: scroll;
-    color: #fff;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'BeonRegular';
-    color: #dcffff;
-}
-
-a {
-    text-decoration: none;
-    color: #339798;
 }
 
 input {
     height: 20px;
-}
-
-.center1 {
-    text-align: center;
-}
-
-.right {
-    float: right;
-}
-
-/* HEADER SETTINGS */
-.pageHeader a img {
-    width: 40%;
-    height: auto;
-    padding: 20px;
-    display: block;
-    margin-top: 40px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* NAVIGATION SETTINGS */
@@ -95,131 +58,20 @@ input {
     display: block;
 }
 
-
-/* CONTAINER SETTINGS */
-.container {
-    padding: 0px 20px;
-}
-
 /* FORM SETTINGS */
-.login {
-    text-align: center;
-    background-color: rgba(51,151,152,0.5);
-    width: 225px;
-    margin: auto;
-    padding: 10px;
-    border-radius: 10px;
-    color: #dcffff;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";       /* IE 8 */
-    filter: alpha(opacity=100);  /* IE 5-7 */
-    -moz-opacity: 1;          /* Netscape */
-    -khtml-opacity: 1;        /* Safari 1.x */
-    opacity: 1;               /* Good browsers */
-}
-
-.loginForm {
-    background-color: rgba(255,255,255,0.7);
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-}
-
-form {
-    padding-top: 5px;
-}
-
 .form-button {
-    font-family: 'BeonRegular';
-    margin-top: 5px;
-    cursor: pointer;
     height: 30px;
-    width: 50px;
-    border-radius: 5px;
-    background-color: #339798;
-    color: #dcffff;
-    padding: 2px;
-}
-
-.form-button a {
-    color: #ffffff;
-}
-
-/* FLASH SETTINGS */
-.greenFlash {
-    margin: 2px;
-    padding: 5px;
-    width: auto;
-    background-color: #ccffcc;
-    color: black;
-    border: 1px solid green;
-}
-.redFlash {
-    margin: 2px;
-    padding: 5px;
-    width: auto;
-    background-color: #ffb2b2;
-    color: black;
-    border: 1px solid red;
-}
-.redFlash ul {
-    list-style: none;
-}
-
-/* PROGRESS BAR SETTINGS */
-#myProgress {
-    margin-top: 10px;
-    width: 100%;
-    background-color: lightgrey;
-    border-radius: 5px;
-}
-
-#myBar {
-    width: 0%;
-    height: 30px;
-    background-color: #339798;
-    border-radius: 5px;
-}
-
-/* ALL LIST SETTINGS */
-.lockImg {
-    width: 20px;
-    height: 20px;
-    float: right;
-}
-
-.inline {
-    display: inline;
+    width: 60px;
 }
 
 /* BUCKETLIST SETTINGS */
 .bucketlists {
     width: 100%;
 }
-.bucketlist {
-    padding: 5px;
-    border-radius: 5px;
-    color: black;
-    background-color: lightgrey;
-    margin-bottom: 5px;
-}
 
 /* LIFELIST SETTINGS */
 .lifelist {
-    padding: 5px;
-    border-radius: 5px;
-    color: black;
-    background-color: lightgrey;
     width: 98.6%;
-    margin-bottom: 5px;
-}
-
-.addGoal {
-    margin-top: 5px;
-    padding-bottom: 5px;
-}
-
-.checkbox {
-    margin-right: 5px;
 }
 
 /* CHAT SETTINGS */
@@ -229,223 +81,28 @@ form {
 }
 
 .chat {
-    text-align: left;
     height: 390px;
-    width: 250px;
-    padding: 10px 10px;
-    padding-top: 10px;
-    font-family: monospace;
-    background-color: #339798;
-    border-radius: 5px;
-}
-
-.chat input {
-    z-index: 1;
-}
-
-.message {
-    color: #339798;
-}
-
-.author {
-    font-weight: bold;
-    color: black;
-}
-
-.messages {
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    padding: 10px;
-    width: 230px;
-    height: 240px;
-    overflow: auto;
-    overflow-x: hidden;
-}
-
-.chat .messageArea {
-    width: 238px;
-    margin-top: 5px;
-    padding: 5px;
-    height: 40px;
-}
-
-.send {
-    float: right;
 }
 
 .chatUsers {
     margin-top: 5px;
-    text-align: left;
-    height: 210px;
-    width: 250px;
-    padding: 10px 10px;
-    padding-top: 10px;
-    font-family: monospace;
-    background-color: #339798;
-    border-radius: 5px;
-}
-
-.theUsers {
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    padding: 10px;
-    width: 230px;
-    height: 160px;
-    overflow: auto;
-    overflow-x: hidden;
-}
-
-.connectedUser {
-    color: #339798;
-}
-
-
-/* UPLOAD SETTINGS */
-.info {
-    height: 100px;
-    width: 250px;
-    padding: 10px 10px;
-    padding-top: 10px;
-    font-family: monospace;
-    background-color: rgba(51,151,152,0.5);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";       /* IE 8 */
-    filter: alpha(opacity=100);  /* IE 5-7 */
-    -moz-opacity: 1;          /* Netscape */
-    -khtml-opacity: 1;        /* Safari 1.x */
-    opacity: 1;               /* Good browsers */
-    border-radius: 5px;
-}
-
-.info2 {
-    height: auto;
-    width: 200px;
-    padding: 10px 10px;
-    padding-top: 10px;
-    font-family: monospace;
-    background-color: rgba(51,151,152,0.5);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";       /* IE 8 */
-    filter: alpha(opacity=100);  /* IE 5-7 */
-    -moz-opacity: 1;          /* Netscape */
-    -khtml-opacity: 1;        /* Safari 1.x */
-    opacity: 1;               /* Good browsers */
-    border-radius: 5px;
-}
-
-.previewImg {
-    width: 40%;
-}
-
-#image {
-    width: 100%;
-    height: 100%;
-}
-
-
-/* INSPIRATION SETTINGS */
-select {
-    margin-top: 10px;
-    width: 98.6%;
 }
 
 .imageContainer {
-    position: relative;
     width: 100%;
-    display: inline-block;
-}
-
-.inspoImage {
-  opacity: 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: .5s ease;
-  backface-visibility: hidden;
-}
-
-.middle {
-  transition: .5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%)
-}
-
-.imageContainer:hover .inspoImage {
-  opacity: 0.7;
-}
-
-.imageContainer:hover .middle {
-  opacity: 1;
-}
-
-.textImg {
-  background-color: #339798;
-  font-family: 'BeonRegular';
-  color: white;
-  font-size: 14px;
-  padding: 16px 32px;
-  cursor: pointer;
-}
-
-.saved {
-    margin: 2px;
-    padding: 5px;
-    width: 220px;
-    background-color: #ccffcc;
-    color: black;
-    border: 1px solid green;
 }
 
 /* MEMORIES SETTINGS */
-.memories {
-    padding: 5px;
-    margin-bottom: 5px;
-    font-family: monospace;
-    background-color: rgba(51,151,152,0.5);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";       /* IE 8 */
-    filter: alpha(opacity=100);  /* IE 5-7 */
-    -moz-opacity: 1;          /* Netscape */
-    -khtml-opacity: 1;        /* Safari 1.x */
-    opacity: 1;               /* Good browsers */
-    border-radius: 5px;
-}
-
-.listImg {
-    width: 17%;
-    height: 17%;
-}
-
-.listImg:hover {
-    cursor: pointer;
-    width: 18%;
-    height: 18%;
-}
-
 .enhancedMemory {
-    width: 100%;
-    font-family: monospace;
-    background-color: rgba(51,151,152,0.5);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";       /* IE 8 */
-    filter: alpha(opacity=100);  /* IE 5-7 */
-    -moz-opacity: 1;          /* Netscape */
-    -khtml-opacity: 1;        /* Safari 1.x */
-    opacity: 1;               /* Good browsers */
-    border-radius: 5px;
     overflow: auto;
     overflow-x: hidden;
 }
 
 #memoImage {
     padding: 5px 0 5px 5px;
-    width: 48%;
-    height: 48%;
 }
 
 #story {
     padding: 5px 5px 5px 0;
     width: 47%;
-    float: right;
-    white-space: pre-line;
 }

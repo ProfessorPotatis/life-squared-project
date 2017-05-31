@@ -6,7 +6,7 @@
 
 html {
     background: url('../images/brickwall.jpg') no-repeat center center fixed;
-    background-size: cover;
+    /*background-size: cover;*/
 }
 
 /* BODY SETTINGS */
@@ -41,32 +41,6 @@ a {
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
-}
-
-/* NAVIGATION SETTINGS */
-.navigation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-.navList {
-    font-family: 'BeonRegular';
-    list-style: none;
-    background-color: #339798;
-    padding: 10px;
-}
-.navList li {
-    display: inline;
-}
-.navList li a {
-    padding: 10px;
-    font-size: 18px;
-    color: #dcffff;
-}
-.navList li a:hover {
-    background-color: #2d7f7e;
 }
 
 /* CONTAINER SETTINGS */
@@ -105,7 +79,6 @@ form {
     font-family: 'BeonRegular';
     margin-top: 5px;
     cursor: pointer;
-    height: 20px;
     border-radius: 5px;
     background-color: #339798;
     color: #dcffff;
@@ -164,10 +137,6 @@ form {
 }
 
 /* BUCKETLIST SETTINGS */
-.bucketlists {
-    float: left;
-    width: 48%;
-}
 .bucketlist {
     padding: 5px;
     border-radius: 5px;
@@ -181,9 +150,7 @@ form {
     padding: 5px;
     border-radius: 5px;
     color: black;
-    float: right;
     background-color: lightgrey;
-    width: 48%;
     margin-bottom: 5px;
 }
 
@@ -197,15 +164,8 @@ form {
 }
 
 /* CHAT SETTINGS */
-.center {
-    margin: auto;
-    width: 550px;
-}
-
 .chat {
     text-align: left;
-    float: left;
-    height: 370px;
     width: 250px;
     padding: 10px 10px;
     padding-top: 10px;
@@ -250,7 +210,6 @@ form {
 
 .chatUsers {
     text-align: left;
-    float: right;
     height: 210px;
     width: 250px;
     padding: 10px 10px;
@@ -324,7 +283,6 @@ select {
 
 .imageContainer {
     position: relative;
-    width: 49%;
     display: inline-block;
 }
 
@@ -411,14 +369,11 @@ select {
 }
 
 #memoImage {
-    padding: 5px;
     width: 48%;
     height: 48%;
 }
 
 #story {
-    padding: 5px;
-    width: 48%;
     float: right;
     white-space: pre-line;
 }
