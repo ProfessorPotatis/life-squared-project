@@ -18,7 +18,7 @@
             {{else}}
                 <img class="lockImg" src="/images/padlock-green.png" alt="A green padlock indicating that the list in unlocked." id="{{id}}" data-list="bucketlist">
             {{/if}}<br>
-            <b>Created at: </b>{{createdAt}}<br>
+            <b>Created at: </b><p class="date">{{createdAt}}</p><br>
             <b>Goals:</b><br>
             {{#if goals}}
                 {{#each goals}}
@@ -39,7 +39,7 @@
                 <div class="addGoal"><a href="/addGoal/{{id}}/{{username}}?list=Bucketlist" class="form-button">+ Add goal</a></div>
             {{/if}}
             {{#if deadline}}
-                <br><b>Deadline: </b>{{deadline}}<br>
+                <br><b>Deadline: </b><p class="date">{{deadline}}</p><br>
             {{else}}
                 <div class="addGoal"><a href="/setDeadline/{{id}}/{{username}}?list=Bucketlist" class="form-button">+ Set deadline</a></div>
             {{/if}}
@@ -56,7 +56,7 @@
             {{else}}
                 <img class="lockImg" src="/images/padlock-green.png" alt="A green padlock indicating that the list is unlocked." id="{{id}}" data-list="lifelist">
             {{/if}}<br>
-            <b>Created at: </b>{{createdAt}}<br>
+            <b>Created at: </b><p class="date">{{createdAt}}</p><br>
             <b>Goals:</b><br>
             {{#if goals}}
                 {{#each goals}}
@@ -77,7 +77,7 @@
                 <div class="addGoal"><a href="/addGoal/{{id}}/{{username}}?list=Lifelist" class="form-button">+ Add goal</a></div>
             {{/if}}
             {{#if deadline}}
-                <br><b>Deadline: </b>{{deadline}}<br>
+                <br><b>Deadline: </b><p class="date">{{deadline}}</p><br>
             {{else}}
                 <div class="addGoal"><a href="/setDeadline/{{id}}/{{username}}?list=Lifelist" class="form-button">+ Set deadline</a></div>
             {{/if}}

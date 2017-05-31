@@ -12,6 +12,15 @@ function ready() {
     // Connect to socket.io.
     let socket = io();
 
+    let dates = document.getElementsByClassName('date');
+
+    for (let x = 0; x < dates.length; x += 1) {
+        let d = new Date(dates[x].textContent);
+        let months = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+        dates[x].textContent = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
     let lockImg = document.getElementsByClassName('lockImg');
 
     for (let i = 0; i < lockImg.length; i += 1) {
